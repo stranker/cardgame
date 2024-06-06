@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://81fj8xjliu56"]
+
+[ext_resource type="Texture2D" uid="uid://b064vxpv4eokm" path="res://Cards/card_placeholder.jpg" id="1_71qkk"]
+[ext_resource type="Texture2D" uid="uid://qq0doja0d4hy" path="res://icon.svg" id="2_pif15"]
+[ext_resource type="PackedScene" uid="uid://b6gcl6dobh660" path="res://Objects/Units/unit.tscn" id="3_5kjlb"]
+[ext_resource type="Script" path="res://Objects/card_data.gd" id="4_1bgc8"]
+
+[resource]
+script = ExtResource("4_1bgc8")
+card_name = "Unit"
+card_description = "Just a Unit"
+card_rarity = 0
+card_image = ExtResource("2_pif15")
+card_background = ExtResource("1_71qkk")
+card_object_scene = ExtResource("3_5kjlb")

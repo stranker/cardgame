@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnhp8xorl5mht"]
+
+[ext_resource type="Script" path="res://Objects/Components/construct_component.gd" id="1_bfw8m"]
+
+[node name="ConstructComponent" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_bfw8m")

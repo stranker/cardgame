@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://inamvh6wypre"]
+
+[ext_resource type="Script" path="res://Objects/card_holder.gd" id="1_wl2lg"]
+
+[node name="CardHolder" type="Node2D" node_paths=PackedStringArray("cards_parent")]
+script = ExtResource("1_wl2lg")
+cards_offset_x = 10.0
+cards_parent = NodePath("Cards")
+
+[node name="Cards" type="Node2D" parent="."]
