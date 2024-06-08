@@ -28,6 +28,8 @@ func _ready():
 	mid_position = Vector2(get_viewport_rect().size.x * 0.5, global_position.y)
 	card_picked.connect(SelectionManager.on_card_selected)
 	card_dropped.connect(SelectionManager.on_card_deselected)
+	card_picked.connect(ConstructManager.on_card_picked)
+	card_dropped.connect(ConstructManager.on_card_dropped)
 	pass
 
 func set_data(new_card_data : CardData):

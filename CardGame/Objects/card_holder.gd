@@ -10,12 +10,9 @@ var half_screen_center : Vector2
 var concentration_factor : float = 1
 var max_cards : int = 12
 
-signal create_card_object(card)
-
 func _ready():
 	ConstructManager.construct_success.connect(on_construct_success)
 	ConstructManager.construct_failed.connect(on_construct_failed)
-	create_card_object.connect(ConstructManager.on_create_card_object)
 	half_screen_center = get_viewport_rect().size * 0.5
 	global_position.x = half_screen_center.x
 	var unit = load("res://Objects/Cards/unit_data.tres")
@@ -29,9 +26,6 @@ func _ready():
 
 func _create_card(data : CardData):
 	var card : Card = card_scene.instantiate() as Card
-	card.card_picked.connect(_on_card_picked)
-	card.card_highlighted.connect(_on_card_highlighted)
-	card.card_dropped.connect(_on_card_dropped)
 	cards_parent.add_child(card)
 	cards.append(card)
 	card.set_data(data)
@@ -54,19 +48,10 @@ func _on_card_picked(card : Card):
 	for hand_card in cards:
 		if card != hand_card:
 			hand_card.disabled()
-	_create_card_object(card)
 	pass
 
 func _on_card_highlighted(card : Card):
 	cards_parent.move_child(card, get_child_count() - 1)
-	pass
-
-func _create_card_object(card : Card):
-	create_card_object.emit(card)
-	pass
-
-func _on_card_dropped(card : Card):
-	_create_card_object(card)
 	pass
 
 func on_construct_failed(card : Card):

@@ -23,6 +23,8 @@ corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
 [node name="Building" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 6
 script = ExtResource("1_v2wy1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -35,6 +37,8 @@ shape = SubResource("RectangleShape2D_nmhxt")
 texture = ExtResource("1_yqekq")
 
 [node name="SelectableComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("2_3rwa3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]

@@ -3,5 +3,6 @@
 [ext_resource type="Script" path="res://Objects/Components/construct_component.gd" id="1_bfw8m"]
 
 [node name="ConstructComponent" type="Area2D"]
-collision_mask = 3
+collision_layer = 16
+collision_mask = 6
 script = ExtResource("1_bfw8m")

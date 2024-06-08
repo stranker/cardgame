@@ -45,3 +45,11 @@ right_click={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[layer_names]
+
+2d_physics/layer_1="Card"
+2d_physics/layer_2="Build"
+2d_physics/layer_3="Unit"
+2d_physics/layer_4="Selection"
+2d_physics/layer_5="Construct"
