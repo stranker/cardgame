@@ -7,6 +7,7 @@ extends Area2D
 var select_panel : Panel
 var size : Vector2
 var rect_size : Rect2
+var is_mouse_inside : bool = false
 
 signal selected()
 signal deselected()
@@ -22,30 +23,36 @@ func _ready():
 	pass
 
 func select():
-	if is_selected: return
 	is_selected = true
 	selected.emit()
 	select_panel.show()
 	pass
 
 func deselect():
-	if not is_selected: return
 	is_selected = false
 	deselected.emit()
 	select_panel.hide()
 	pass
 
 func _unhandled_input(event : InputEvent):
-	if event.is_action("left_click"):
-		if event.is_pressed():
-			deselect()
-	if event.is_action("right_click") and Rect2(global_position - size * 0.5, size).has_point(event.global_position):
+	if event.is_action("right_click") and is_mouse_inside:
 		if event.is_pressed():
 			action_target.emit()
 	pass
 
 func _on_input_event(viewport, event : InputEvent, shape_idx):
-	if event.is_action("left_click"):
+	if event.is_action("left_click") and is_mouse_inside:
+		print_debug("_on_input_event")
 		if event.is_pressed():
 			select()
+	pass # Replace with function body.
+
+
+func _on_mouse_entered():
+	is_mouse_inside = true
+	pass # Replace with function body.
+
+
+func _on_mouse_exited():
+	is_mouse_inside = false
 	pass # Replace with function body.

@@ -62,7 +62,6 @@ func disabled():
 	pick_state = PickState.DISABLED
 	interact_area.monitoring = false
 	anim.play("Disabled")
-	print_debug("Disabled")
 	pass
 
 func enable():
