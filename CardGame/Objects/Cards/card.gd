@@ -15,6 +15,9 @@ enum PickState { DISABLED, ENABLED }
 @export var movement_state : MovementState = MovementState.IDLE
 @export var pick_state : PickState = PickState.ENABLED
 @export var interact_area : Area2D
+@export var card_image : TextureRect
+@export var card_name : Label
+@export var card_description : Label
 
 signal card_picked(card)
 signal card_dropped(card)
@@ -28,10 +31,10 @@ func _ready():
 
 func set_data(new_card_data : CardData):
 	card_data = new_card_data
-	$Visual/Background.texture = card_data.card_background
-	$Visual/Background/Panel/MarginContainer/Control/TextureRect.texture = card_data.card_image
-	$Visual/Background/Panel/MarginContainer/Control/Name.text = card_data.card_name
-	$Visual/Background/Panel/MarginContainer/Control/RichTextLabel.text = card_data.card_description
+	#$Visual/Background.texture = card_data.card_background
+	card_image.texture = card_data.card_image
+	card_name.text = card_data.card_name
+	card_description.text = card_data.card_description
 	pass
 
 func get_size_x():

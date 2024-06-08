@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3jwjeua2pyhb"]
+
+[ext_resource type="Texture2D" uid="uid://b064vxpv4eokm" path="res://Cards/card_placeholder.jpg" id="1_54owe"]
+[ext_resource type="Script" path="res://Objects/Cards/card.gd" id="1_n73t1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kakbc"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_fakbd"]
+
+[node name="Card" type="Node2D" node_paths=PackedStringArray("background", "anim", "card_image", "card_name", "card_description")]
+script = ExtResource("1_n73t1")
+background = NodePath("Background")
+anim = NodePath("Anim")
+card_image = NodePath("Background/Control/Image")
+card_name = NodePath("Background/Control/Name")
+card_description = NodePath("Background/Control/Description")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_54owe")
+
+[node name="Control" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -119.0
+offset_top = -166.0
+offset_right = 119.0
+offset_bottom = 166.0
+
+[node name="Image" type="TextureRect" parent="Background/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -128.0
+offset_right = 88.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="Label" parent="Background/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 4.0
+offset_right = 112.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "Xarlanga"
+label_settings = SubResource("LabelSettings_kakbc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="Background/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -104.0
+offset_top = 182.0
+offset_right = 104.0
+offset_bottom = 318.0
+grow_horizontal = 2
+text = "Description"
+label_settings = SubResource("LabelSettings_fakbd")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
