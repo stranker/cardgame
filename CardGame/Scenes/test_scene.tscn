@@ -4,5 +4,7 @@
 
 [node name="TestScene" type="Node2D"]
 
+[node name="Map" type="NavigationRegion2D" parent="."]
+
 [node name="CardHolder" parent="." instance=ExtResource("1_jijr5")]
 position = Vector2(960, 896)

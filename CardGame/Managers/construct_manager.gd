@@ -16,7 +16,7 @@ func _process(delta):
 func create_card_object(card : Card):
 	construct_phase = ConstructPhase.CONSTRUCT
 	current_card_object = card.get_object_scene().instantiate()
-	get_tree().root.add_child(current_card_object)
+	get_tree().root.get_node("TestScene/Map").add_child(current_card_object)
 	current_card_object.global_position = card.global_position
 	set_process(true)
 	pass

@@ -9,6 +9,7 @@ class_name Card
 var initial_position : Vector2
 var mid_position : Vector2
 var rotation_factor : float = 0
+var is_highligthed : bool = false
 
 enum MovementState { IDLE, DRAG }
 enum PickState { DISABLED, ENABLED }
@@ -61,6 +62,7 @@ func disabled():
 	pick_state = PickState.DISABLED
 	interact_area.monitoring = false
 	anim.play("Disabled")
+	print_debug("Disabled")
 	pass
 
 func enable():
@@ -81,7 +83,8 @@ func reset():
 
 
 func _on_interact_mouse_entered():
-	if pick_state == PickState.DISABLED: return
+	if pick_state == PickState.DISABLED or is_highligthed: return
+	is_highligthed = true
 	anim.play("Highlighted")
 	card_highlighted.emit(self)
 	pass # Replace with function body.
@@ -89,9 +92,15 @@ func _on_interact_mouse_entered():
 
 func _on_interact_mouse_exited():
 	if pick_state == PickState.DISABLED: return
-	anim.play_backwards("Highlighted")
+	unhighlight()
+	is_highligthed = false
 	pass # Replace with function body.
 
+
+func unhighlight():
+	if not is_highligthed: return
+	anim.play_backwards("Highlighted")
+	pass
 
 func _on_interact_input_event(viewport, event, shape_idx):
 	if pick_state == PickState.DISABLED: return
