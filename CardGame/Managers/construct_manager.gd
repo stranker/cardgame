@@ -5,6 +5,7 @@ signal construct_failed(card)
 
 var current_card_object : Node2D
 
+enum ConstructType { BUILDING, UNIT }
 enum ConstructPhase { IDLE, CONSTRUCT }
 var construct_phase : ConstructPhase = ConstructPhase.IDLE
 

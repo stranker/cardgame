@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://u55ski3u5eos"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://djlstlty8kurd"]
 
-[ext_resource type="Texture2D" uid="uid://b064vxpv4eokm" path="res://Cards/card_placeholder.jpg" id="1_mujfh"]
-[ext_resource type="Texture2D" uid="uid://qq0doja0d4hy" path="res://icon.svg" id="2_fjtjd"]
-[ext_resource type="PackedScene" uid="uid://cjdfc8rvsasxn" path="res://Objects/Buildings/building.tscn" id="3_k5qym"]
+[ext_resource type="Texture2D" uid="uid://b064vxpv4eokm" path="res://Cards/card_placeholder.jpg" id="1_ps0m8"]
+[ext_resource type="Texture2D" uid="uid://bn42djc3lmgaf" path="res://Objects/Buildings/House.png" id="2_elcdk"]
+[ext_resource type="PackedScene" uid="uid://cwp7jntte1nfm" path="res://Objects/Buildings/building.tscn" id="3_oqgf3"]
 [ext_resource type="Script" path="res://Objects/card_data.gd" id="3_u4w8q"]
 
 [resource]
 script = ExtResource("3_u4w8q")
 card_name = "House"
-card_description = "Just a house"
+card_description = "Just a jouse"
 card_rarity = 0
-card_image = ExtResource("2_fjtjd")
-card_background = ExtResource("1_mujfh")
-card_object_scene = ExtResource("3_k5qym")
+card_image = ExtResource("2_elcdk")
+card_background = ExtResource("1_ps0m8")
+card_object_scene = ExtResource("3_oqgf3")
+card_type = 0
