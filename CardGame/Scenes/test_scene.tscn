@@ -5,4 +5,4 @@
 [node name="TestScene" type="Node2D"]
 
 [node name="CardHolder" parent="." instance=ExtResource("1_jijr5")]
-position = Vector2(576, 512)
+position = Vector2(960, 896)

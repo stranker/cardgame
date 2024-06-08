@@ -120,6 +120,7 @@ offset_left = -119.0
 offset_top = -166.0
 offset_right = 119.0
 offset_bottom = 166.0
+mouse_filter = 2
 
 [node name="Image" type="TextureRect" parent="Background/Control"]
 layout_mode = 1
@@ -174,5 +175,6 @@ libraries = {
 shape = SubResource("RectangleShape2D_o7baq")
 debug_color = Color(0.777447, 0.136132, 1, 0.42)
 
+[connection signal="input_event" from="Interact" to="." method="_on_interact_input_event"]
 [connection signal="mouse_entered" from="Interact" to="." method="_on_interact_mouse_entered"]
 [connection signal="mouse_exited" from="Interact" to="." method="_on_interact_mouse_exited"]

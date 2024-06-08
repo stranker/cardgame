@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwp7jntte1nfm"]
+[gd_scene load_steps=7 format=3 uid="uid://cwp7jntte1nfm"]
 
 [ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
 [ext_resource type="Texture2D" uid="uid://qq0doja0d4hy" path="res://icon.svg" id="1_yqekq"]
@@ -9,6 +9,18 @@ size = Vector2(128, 104)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6mabi"]
 size = Vector2(128, 128)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwccn"]
+bg_color = Color(0.800491, 0.800491, 0.800491, 0.101961)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.964742, 0.964742, 0.964742, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [node name="Building" type="StaticBody2D"]
 script = ExtResource("1_v2wy1")
@@ -28,3 +40,12 @@ script = ExtResource("2_3rwa3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
 shape = SubResource("RectangleShape2D_6mabi")
 debug_color = Color(0.344888, 0.484789, 1, 0.42)
+
+[node name="SelectPanel" type="Panel" parent="SelectableComponent"]
+show_behind_parent = true
+z_index = -1
+offset_left = -64.0
+offset_top = 12.0
+offset_right = 64.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kwccn")

@@ -40,24 +40,6 @@ func set_data(new_card_data : CardData):
 func get_size_x():
 	return background.texture.get_size().x
 
-func _on_interact_area_input_event(viewport, event : InputEvent, shape_idx):
-	if pick_state == PickState.DISABLED: return
-	if event.is_action("left_click"):
-		if event.pressed:
-			movement_state = MovementState.DRAG
-			var tween = create_tween()
-			tween.parallel().tween_property(self, "rotation_degrees", 0, 0.2).set_ease(Tween.EASE_IN)
-			tween.parallel().tween_property($Visual, "modulate:a", 0, 0.2).set_ease(Tween.EASE_IN)
-			tween.play()
-			card_picked.emit(self)
-		else:
-			if movement_state == MovementState.DRAG:
-				movement_state = MovementState.IDLE
-				card_dropped.emit(self)
-	if event is InputEventMouseMotion and movement_state == MovementState.DRAG:
-		global_position = get_global_mouse_position()
-	pass # Replace with function body.
-
 func set_new_position(pos : Vector2):
 	initial_position = pos
 	global_position = initial_position
@@ -90,7 +72,7 @@ func reset():
 	tween.parallel()
 	tween.parallel().tween_property(self, "global_position", initial_position, 0.2).set_ease(Tween.EASE_IN)
 	tween.parallel().tween_property(self, "rotation_degrees", rotation_factor * 4, 0.2).set_ease(Tween.EASE_IN)
-	tween.parallel().tween_property($Visual, "modulate:a", 1, 0.2).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(background, "modulate:a", 1, 0.2).set_ease(Tween.EASE_IN)
 	tween.play()
 	pick_state = PickState.ENABLED
 	pass
@@ -106,4 +88,23 @@ func _on_interact_mouse_entered():
 func _on_interact_mouse_exited():
 	if pick_state == PickState.DISABLED: return
 	anim.play_backwards("Highlighted")
+	pass # Replace with function body.
+
+
+func _on_interact_input_event(viewport, event, shape_idx):
+	if pick_state == PickState.DISABLED: return
+	if event.is_action("left_click"):
+		if event.pressed:
+			movement_state = MovementState.DRAG
+			var tween = create_tween()
+			tween.parallel().tween_property(self, "rotation_degrees", 0, 0.3).set_ease(Tween.EASE_IN)
+			tween.parallel().tween_property(background, "modulate:a", 0, 0.3).set_ease(Tween.EASE_IN)
+			tween.play()
+			card_picked.emit(self)
+		else:
+			if movement_state == MovementState.DRAG:
+				movement_state = MovementState.IDLE
+				card_dropped.emit(self)
+	if event is InputEventMouseMotion and movement_state == MovementState.DRAG:
+		global_position = get_global_mouse_position()
 	pass # Replace with function body.
