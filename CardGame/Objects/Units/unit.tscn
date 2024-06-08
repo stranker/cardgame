@@ -1,12 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=8 format=3 uid="uid://cqgw352wklrr4"]
 
+[ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="Texture2D" uid="uid://da2exxljc0mm3" path="res://Objects/Units/Soldier.png" id="1_m6fl0"]
+[ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="2_nyxvx"]
+[ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="3_324de"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffnn0"]
 radius = 16.0
 height = 64.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chg2t"]
+size = Vector2(48, 64)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2xa8"]
+radius = 16.0
+height = 64.0
+
 [node name="Unit" type="CharacterBody2D"]
+script = ExtResource("1_i3mpu")
 
 [node name="Visual" type="Node2D" parent="."]
 
@@ -16,3 +27,15 @@ hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ffnn0")
+
+[node name="SelectableComponent" parent="." instance=ExtResource("2_nyxvx")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
+shape = SubResource("RectangleShape2D_chg2t")
+debug_color = Color(0.350929, 0.483167, 1, 0.42)
+
+[node name="ConstructComponent" parent="." instance=ExtResource("3_324de")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
+shape = SubResource("CapsuleShape2D_h2xa8")
+debug_color = Color(0.787424, 0.101813, 1, 0.42)
