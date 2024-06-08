@@ -11,13 +11,11 @@ var concentration_factor : float = 1
 var max_cards : int = 12
 
 signal create_card_object(card)
-signal create_card_ghost_object(card)
 
 func _ready():
 	ConstructManager.construct_success.connect(on_construct_success)
 	ConstructManager.construct_failed.connect(on_construct_failed)
 	create_card_object.connect(ConstructManager.on_create_card_object)
-	create_card_ghost_object.connect(ConstructManager.on_create_card_ghost_object)
 	half_screen_center = get_viewport_rect().size * 0.5
 	global_position.x = half_screen_center.x
 	var unit = load("res://Objects/Cards/unit_data.tres")
@@ -56,7 +54,7 @@ func _on_card_picked(card : Card):
 	for hand_card in cards:
 		if card != hand_card:
 			hand_card.disabled()
-	_create_card_ghost_object(card)
+	_create_card_object(card)
 	pass
 
 func _on_card_highlighted(card : Card):
@@ -65,10 +63,6 @@ func _on_card_highlighted(card : Card):
 
 func _create_card_object(card : Card):
 	create_card_object.emit(card)
-	pass
-
-func _create_card_ghost_object(card : Card):
-	create_card_ghost_object.emit(card)
 	pass
 
 func _on_card_dropped(card : Card):
