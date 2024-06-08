@@ -2,7 +2,7 @@ extends Node2D
 
 class_name CardHolder
 
-@onready var card_scene = preload("res://Objects/card.tscn")
+@onready var card_scene = preload("res://Objects/Cards/card.tscn")
 @export var cards_offset_x : float = 20
 @export var cards_parent : Node2D
 var cards : Array[Card]

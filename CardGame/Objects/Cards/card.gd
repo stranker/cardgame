@@ -12,6 +12,7 @@ var rotation_factor : float = 0
 
 enum MovementState { IDLE, DRAG }
 enum PickState { DISABLED, ENABLED }
+
 @export var movement_state : MovementState = MovementState.IDLE
 @export var pick_state : PickState = PickState.ENABLED
 @export var interact_area : Area2D
@@ -31,7 +32,6 @@ func _ready():
 
 func set_data(new_card_data : CardData):
 	card_data = new_card_data
-	#$Visual/Background.texture = card_data.card_background
 	card_image.texture = card_data.card_image
 	card_name.text = card_data.card_name
 	card_description.text = card_data.card_description
@@ -39,17 +39,6 @@ func set_data(new_card_data : CardData):
 
 func get_size_x():
 	return background.texture.get_size().x
-
-func _on_interact_area_mouse_entered():
-	if pick_state == PickState.DISABLED: return
-	anim.play("Highlighted")
-	card_highlighted.emit(self)
-	pass # Replace with function body.
-
-func _on_interact_area_mouse_exited():
-	if pick_state == PickState.DISABLED: return
-	anim.play_backwards("Highlighted")
-	pass # Replace with function body.
 
 func _on_interact_area_input_event(viewport, event : InputEvent, shape_idx):
 	if pick_state == PickState.DISABLED: return
@@ -105,3 +94,16 @@ func reset():
 	tween.play()
 	pick_state = PickState.ENABLED
 	pass
+
+
+func _on_interact_mouse_entered():
+	if pick_state == PickState.DISABLED: return
+	anim.play("Highlighted")
+	card_highlighted.emit(self)
+	pass # Replace with function body.
+
+
+func _on_interact_mouse_exited():
+	if pick_state == PickState.DISABLED: return
+	anim.play_backwards("Highlighted")
+	pass # Replace with function body.
