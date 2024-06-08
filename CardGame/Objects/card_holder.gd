@@ -20,7 +20,7 @@ func _ready():
 	#_create_card(unit)
 	#_create_card(unit)
 	#_create_card(unit)
-	#_create_card(house)
+	_create_card(house)
 	_create_card(house)
 	pass
 

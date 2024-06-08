@@ -30,6 +30,7 @@ func on_card_dropped(card : Card):
 		set_process(false)
 		construct_phase = ConstructPhase.IDLE
 		construct_success.emit(card)
+		current_card_object.get_node("ConstructComponent").construct()
 	else:
 		current_card_object.queue_free()
 		current_card_object = null

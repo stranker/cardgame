@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwp7jntte1nfm"]
+[gd_scene load_steps=10 format=3 uid="uid://cwp7jntte1nfm"]
 
 [ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
-[ext_resource type="Texture2D" uid="uid://qq0doja0d4hy" path="res://icon.svg" id="1_yqekq"]
 [ext_resource type="Script" path="res://Objects/Components/selectable_component.gd" id="2_3rwa3"]
+[ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="4_2e6cy"]
 [ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="4_iq34l"]
+[ext_resource type="Texture2D" uid="uid://bn42djc3lmgaf" path="res://Objects/Buildings/House.png" id="5_x2rgf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nmhxt"]
 size = Vector2(128, 104)
@@ -35,11 +36,6 @@ script = ExtResource("1_v2wy1")
 position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_nmhxt")
 
-[node name="Visual" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Visual"]
-texture = ExtResource("1_yqekq")
-
 [node name="SelectableComponent" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 0
@@ -62,3 +58,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_kwccn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
 shape = SubResource("RectangleShape2D_5llsy")
+
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("construct_component") instance=ExtResource("4_2e6cy")]
+construct_component = NodePath("../ConstructComponent")
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
+texture_filter = 1
+position = Vector2(0, 11)
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("5_x2rgf")
