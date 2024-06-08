@@ -1,11 +1,11 @@
 extends Node2D
 
-signal construct_success
-signal construct_failed
+signal construct_success(card)
+signal construct_failed(card)
 
 var current_card_object : Node2D
 
-enum ConstructPhase { IDLE, START, FINISH }
+enum ConstructPhase { IDLE, CONSTRUCT }
 var construct_phase : ConstructPhase = ConstructPhase.IDLE
 
 func _process(delta):
@@ -14,7 +14,7 @@ func _process(delta):
 	pass
 
 func create_card_object(card : Card):
-	construct_phase = ConstructPhase.START
+	construct_phase = ConstructPhase.CONSTRUCT
 	current_card_object = card.get_object_scene().instantiate()
 	get_tree().root.add_child(current_card_object)
 	current_card_object.global_position = card.global_position
@@ -26,6 +26,12 @@ func on_card_picked(card : Card):
 	pass
 
 func on_card_dropped(card : Card):
-	construct_phase = ConstructPhase.FINISH
-	set_process(false)
+	if current_card_object.get_node("ConstructComponent").is_position_available():
+		set_process(false)
+		construct_phase = ConstructPhase.IDLE
+		construct_success.emit(card)
+	else:
+		current_card_object.queue_free()
+		current_card_object = null
+		construct_failed.emit(card)
 	pass
