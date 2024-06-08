@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwp7jntte1nfm"]
+[gd_scene load_steps=6 format=3 uid="uid://cwp7jntte1nfm"]
 
+[ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
 [ext_resource type="Texture2D" uid="uid://qq0doja0d4hy" path="res://icon.svg" id="1_yqekq"]
 [ext_resource type="Script" path="res://Objects/Components/selectable_component.gd" id="2_3rwa3"]
 
@@ -10,6 +11,7 @@ size = Vector2(128, 104)
 size = Vector2(128, 128)
 
 [node name="Building" type="StaticBody2D"]
+script = ExtResource("1_v2wy1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 12)

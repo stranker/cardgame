@@ -19,6 +19,10 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 ConstructManager="*res://Managers/construct_manager.gd"
 SelectionManager="*res://Managers/selection_manager.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor]
 
 export/convert_text_resources_to_binary=false
@@ -35,3 +39,7 @@ right_click={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(260, 23),"global_position":Vector2(264, 64),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
