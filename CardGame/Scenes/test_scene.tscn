@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvb1a2n1km56e"]
+
+[ext_resource type="PackedScene" uid="uid://inamvh6wypre" path="res://Objects/card_holder.tscn" id="1_jijr5"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="CardHolder" parent="." instance=ExtResource("1_jijr5")]
+position = Vector2(576, 512)
