@@ -23,7 +23,6 @@ func target_object(obj : Node2D):
 	pass
 
 func force_move_to_position(pos : Vector2):
-	print_debug("force_move_to_position")
 	target = null
 	move_to_position(pos)
 	pass
@@ -41,10 +40,14 @@ func _physics_process(delta):
 		move_to_position(target.global_position)
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 	var new_velocity: Vector2 = global_position.direction_to(next_path_position) * speed
+	var steering = new_velocity - navigation_agent.velocity
+	var vel = navigation_agent.velocity
+	vel += steering
 	if navigation_agent.avoidance_enabled:
-		navigation_agent.velocity = new_velocity
+		navigation_agent.velocity = vel
+		#navigation_agent.velocity = new_velocity
 	else:
-		_on_velocity_computed(new_velocity)
+		_on_velocity_computed(vel)
 	if navigation_agent.distance_to_target() < min_distance_to_stop and timer.is_stopped():
 		timer.start()
 	pass
