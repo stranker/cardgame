@@ -6,6 +6,7 @@ extends Node2D
 @onready var timer : Timer = $Timer
 @export var min_distance_to_stop : float = 200.0
 var speed : float = 0
+var target : Node2D
 
 signal velocity_computed(vel)
 
@@ -14,15 +15,30 @@ func init(new_speed : float):
 	navigation_agent.max_speed = speed
 	pass
 
-func move_to_target(pos : Vector2):
+func target_object(obj : Node2D):
+	print_debug("target_object")
+	target = obj
+	timer.stop()
+	move_to_position(obj.global_position)
+	pass
+
+func force_move_to_position(pos : Vector2):
+	print_debug("force_move_to_position")
+	target = null
+	move_to_position(pos)
+	pass
+
+func move_to_position(pos : Vector2):
 	navigation_agent.target_position = pos
 	timer.stop()
-	#set_physics_process(true)
+	set_physics_process(true)
 	pass
 
 func _physics_process(delta):
 	if navigation_agent.is_navigation_finished():
 		return
+	if target:
+		move_to_position(target.global_position)
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 	var new_velocity: Vector2 = global_position.direction_to(next_path_position) * speed
 	if navigation_agent.avoidance_enabled:
@@ -35,7 +51,7 @@ func _physics_process(delta):
 
 func _on_timer_timeout():
 	navigation_agent.target_position = get_parent().global_position
-	#set_physics_process(false)
+	set_physics_process(false)
 	pass # Replace with function body.
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):

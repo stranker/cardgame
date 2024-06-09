@@ -58,9 +58,9 @@ func remove_selected_object(obj : Node2D):
 
 func _unhandled_input(event : InputEvent):
 	if interaction_state == InteractionState.CARD: return
-	if event.is_action_pressed("right_click"):
-		if event.is_pressed():
-			_process_selected_objects(event)
+	#if event.is_action_pressed("right_click"):
+		#if event.is_pressed():
+			#_process_selected_objects(event)
 	if event.is_action("left_click"):
 		if event.is_pressed():
 			_unselect_all()
@@ -172,4 +172,8 @@ func _process_point_data_on_objects(data : PointData):
 	for object in selected_objects:
 		if object.has_method("do_action"):
 			object.do_action(data, false)
+	pass
+
+func on_map_event(event : InputEventMouse):
+	_process_selected_objects(event)
 	pass
