@@ -10,13 +10,11 @@ var rect_size : Rect2
 var is_mouse_inside : bool = false
 
 signal selected()
-signal deselected()
 signal action_target()
 
 func _ready():
 	size = get_child(0).shape.size + size_offset
 	selected.connect(SelectionManager.add_selected_object.bind(get_parent()))
-	deselected.connect(SelectionManager.remove_selected_object.bind(get_parent()))
 	action_target.connect(SelectionManager.on_action_target.bind(get_parent()))
 	select_panel = get_child(1)
 	select_panel.hide()
@@ -30,7 +28,6 @@ func select():
 
 func deselect():
 	is_selected = false
-	deselected.emit()
 	select_panel.hide()
 	pass
 
@@ -42,7 +39,6 @@ func _unhandled_input(event : InputEvent):
 
 func _on_input_event(viewport, event : InputEvent, shape_idx):
 	if event.is_action("left_click") and is_mouse_inside:
-		print_debug("_on_input_event")
 		if event.is_pressed():
 			select()
 	pass # Replace with function body.

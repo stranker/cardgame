@@ -12,6 +12,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 [node name="TestScene" type="Node2D"]
 
 [node name="Map" type="NavigationRegion2D" parent="."]
+y_sort_enabled = true
 navigation_polygon = SubResource("NavigationPolygon_2i3st")
 script = ExtResource("1_xlx38")
 

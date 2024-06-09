@@ -17,11 +17,11 @@ func _ready():
 	global_position.x = half_screen_center.x
 	var unit = load("res://Objects/Cards/unit_data.tres")
 	var house = load("res://Objects/Cards/house_data.tres")
-	#_create_card(unit)
-	#_create_card(unit)
-	#_create_card(unit)
 	_create_card(house)
 	_create_card(house)
+	_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
 	pass
 
 func _create_card(data : CardData):

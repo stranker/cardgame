@@ -148,7 +148,6 @@ func on_deselect_object(body : PhysicsBody2D):
 	pass
 
 func _unselect_all():
-	print_debug(selected_objects)
 	for obj in selected_objects:
 		obj.get_node("SelectableComponent").deselect()
 	selected_objects.clear()

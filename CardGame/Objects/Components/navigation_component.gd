@@ -11,6 +11,7 @@ signal velocity_computed(vel)
 
 func init(new_speed : float):
 	speed = new_speed
+	navigation_agent.max_speed = speed
 	pass
 
 func move_to_target(pos : Vector2):
