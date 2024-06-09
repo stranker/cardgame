@@ -45,7 +45,6 @@ func _physics_process(delta):
 	vel += steering
 	if navigation_agent.avoidance_enabled:
 		navigation_agent.velocity = vel
-		#navigation_agent.velocity = new_velocity
 	else:
 		_on_velocity_computed(vel)
 	if navigation_agent.distance_to_target() < min_distance_to_stop and timer.is_stopped():
