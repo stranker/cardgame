@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=11 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="Texture2D" uid="uid://da2exxljc0mm3" path="res://Objects/Units/Soldier.png" id="1_m6fl0"]
 [ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="2_nyxvx"]
 [ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="3_324de"]
 [ext_resource type="PackedScene" uid="uid://cfsn81qx1jkhb" path="res://Objects/Components/navigation_component.tscn" id="5_2vgb6"]
+[ext_resource type="PackedScene" uid="uid://cfgnovjrv8ylr" path="res://Objects/Components/combat_component.tscn" id="6_vofuv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffnn0"]
 radius = 16.0
@@ -29,8 +30,10 @@ corner_radius_bottom_left = 30
 radius = 16.0
 height = 64.0
 
-[node name="Unit" type="CharacterBody2D"]
+[node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target") groups=["Unit"]]
 script = ExtResource("1_i3mpu")
+debug_state = NodePath("Debug/Items/State")
+debug_target = NodePath("Debug/Items/Target")
 
 [node name="Visual" type="Node2D" parent="."]
 texture_filter = 1
@@ -63,3 +66,33 @@ shape = SubResource("CapsuleShape2D_h2xa8")
 debug_color = Color(0.787424, 0.101813, 1, 0.42)
 
 [node name="NavigationComponent" parent="." instance=ExtResource("5_2vgb6")]
+
+[node name="CombatComponent" parent="." instance=ExtResource("6_vofuv")]
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -128.0
+offset_top = -112.0
+offset_right = 128.0
+offset_bottom = -40.0
+
+[node name="Items" type="VBoxContainer" parent="Debug"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="State" type="Label" parent="Debug/Items"]
+layout_mode = 2
+text = "State: IDLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Target" type="Label" parent="Debug/Items"]
+layout_mode = 2
+text = "Target: null"
+horizontal_alignment = 1
+vertical_alignment = 1
