@@ -3,7 +3,6 @@ class_name NavigationComponent
 extends Node2D
 
 @onready var navigation_agent : NavigationAgent2D = $NavigationAgent2D
-@onready var timer : Timer = $Timer
 @export var min_distance_attack : float = 20.0
 var speed : float = 0
 var target : Node2D
@@ -18,8 +17,8 @@ func init(new_speed : float):
 	pass
 
 func target_object(obj : Node2D):
+	print_debug("target_object")
 	target = obj
-	timer.stop()
 	move_to_position(obj.global_position)
 	pass
 
@@ -30,7 +29,6 @@ func force_move_to_position(pos : Vector2):
 
 func move_to_position(pos : Vector2):
 	navigation_agent.target_position = pos
-	timer.stop()
 	set_physics_process(true)
 	pass
 
@@ -47,13 +45,7 @@ func _physics_process(delta):
 	var vel = navigation_agent.velocity
 	vel += steering
 	_on_velocity_computed(vel)
-	
 	pass
-
-func _on_timer_timeout():
-	navigation_agent.target_position = get_parent().global_position
-	set_physics_process(false)
-	pass # Replace with function body.
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	_on_velocity_computed(safe_velocity)
@@ -66,8 +58,8 @@ func _on_velocity_computed(vel : Vector2):
 func _on_navigation_agent_2d_target_reached():
 	if target:
 		target_reached.emit(target)
-		set_physics_process(false)
+		print_debug("Target Reached")
 	else:
 		position_reached.emit()
-		set_physics_process(false)
+	set_physics_process(false)
 	pass # Replace with function body.

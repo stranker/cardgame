@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=14 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="Texture2D" uid="uid://da2exxljc0mm3" path="res://Objects/Units/Soldier.png" id="1_m6fl0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="3_324de"]
 [ext_resource type="PackedScene" uid="uid://cfsn81qx1jkhb" path="res://Objects/Components/navigation_component.tscn" id="5_2vgb6"]
 [ext_resource type="PackedScene" uid="uid://cfgnovjrv8ylr" path="res://Objects/Components/combat_component.tscn" id="6_vofuv"]
+[ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="7_ba8vd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffnn0"]
 radius = 16.0
@@ -29,6 +30,20 @@ corner_radius_bottom_left = 30
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2xa8"]
 radius = 16.0
 height = 64.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot4i2"]
+bg_color = Color(0.91853, 0.217091, 3.85046e-07, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkf2t"]
+bg_color = Color(0.203922, 0.886275, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target") groups=["Unit"]]
 script = ExtResource("1_i3mpu")
@@ -69,6 +84,20 @@ debug_color = Color(0.787424, 0.101813, 1, 0.42)
 
 [node name="CombatComponent" parent="." instance=ExtResource("6_vofuv")]
 
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("7_ba8vd")]
+health_bar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthComponent"]
+z_index = -1
+offset_left = -40.0
+offset_top = -48.0
+offset_right = 40.0
+offset_bottom = -40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ot4i2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pkf2t")
+value = 50.0
+show_percentage = false
+
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -76,6 +105,8 @@ offset_left = -128.0
 offset_top = -112.0
 offset_right = 128.0
 offset_bottom = -40.0
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
 
 [node name="Items" type="VBoxContainer" parent="Debug"]
 layout_mode = 1
@@ -84,6 +115,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="State" type="Label" parent="Debug/Items"]
 layout_mode = 2

@@ -17,17 +17,35 @@ func init(_damage : float, _attack_speed : float):
 	attack_timer.wait_time = _attack_speed
 	pass
 
+func _physics_process(delta):
+	if not current_target: return
+	if global_position.distance_to(current_target.global_position) > min_attack_distance:
+		target_out_of_range.emit(current_target)
+		set_physics_process(false)
+	pass
+
 func attack_target(target : Node2D):
 	if not can_attack: return
+	set_physics_process(true)
 	current_target = target
 	can_attack = false
 	attack_timer.start()
+	var target_health_component : HealthComponent = target.get_node("HealthComponent")
+	if not target_health_component.dead.is_connected(on_target_dead):
+		target_health_component.dead.connect(on_target_dead)
 	attack.emit(target)
+	target_health_component.take_damage(damage)
+	pass
+
+func on_target_dead():
+	print_debug("on_target_dead")
+	current_target = null
+	end_attack.emit()
 	pass
 
 func _on_attack_timer_timeout():
 	can_attack = true
-	end_attack.emit()
+	if not current_target: return
 	if global_position.distance_to(current_target.global_position) < min_attack_distance:
 		attack_target(current_target)
 	else:
