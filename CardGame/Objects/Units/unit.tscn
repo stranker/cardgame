@@ -8,9 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://cfgnovjrv8ylr" path="res://Objects/Components/combat_component.tscn" id="6_vofuv"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="7_ba8vd"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffnn0"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_08lj5"]
 radius = 16.0
-height = 64.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_chg2t"]
 size = Vector2(48, 64)
@@ -46,6 +45,8 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target") groups=["Unit"]]
+collision_layer = 4
+collision_mask = 6
 script = ExtResource("1_i3mpu")
 debug_state = NodePath("Debug/Items/State")
 debug_target = NodePath("Debug/Items/Target")
@@ -58,7 +59,8 @@ texture = ExtResource("1_m6fl0")
 hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_ffnn0")
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_08lj5")
 
 [node name="SelectableComponent" parent="." instance=ExtResource("2_nyxvx")]
 
@@ -83,6 +85,7 @@ debug_color = Color(0.787424, 0.101813, 1, 0.42)
 [node name="NavigationComponent" parent="." instance=ExtResource("5_2vgb6")]
 
 [node name="CombatComponent" parent="." instance=ExtResource("6_vofuv")]
+min_attack_distance = 70.0
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("7_ba8vd")]
 health_bar = NodePath("ProgressBar")

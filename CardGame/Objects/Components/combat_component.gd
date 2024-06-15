@@ -55,5 +55,5 @@ func _on_attack_timer_timeout():
 
 func reset():
 	current_target = null
-	end_attack.emit()
+	#end_attack.emit()
 	pass

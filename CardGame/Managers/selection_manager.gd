@@ -32,9 +32,8 @@ func selection_area_setup():
 func _add_selection_area():
 	selection_area = Area2D.new()
 	selection_area.set_collision_layer_value(1, false)
-	selection_area.set_collision_layer_value(5, true)
-	selection_area.set_collision_mask_value(1, true)
 	selection_area.set_collision_mask_value(2, true)
+	selection_area.set_collision_mask_value(3, true)
 	selection_collision = CollisionShape2D.new()
 	add_child(selection_area)
 	selection_area.add_child(selection_collision)

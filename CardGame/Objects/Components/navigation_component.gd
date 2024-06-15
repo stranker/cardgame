@@ -56,10 +56,15 @@ func _on_velocity_computed(vel : Vector2):
 	pass
 
 func _on_navigation_agent_2d_target_reached():
-	if target:
+	if target != null and not target.is_queued_for_deletion():
 		target_reached.emit(target)
-		print_debug("Target Reached")
+		print_debug("Target Reached:", target.name)
 	else:
 		position_reached.emit()
 	set_physics_process(false)
 	pass # Replace with function body.
+
+func stop():
+	set_physics_process(false)
+	navigation_agent.target_position = global_position
+	pass

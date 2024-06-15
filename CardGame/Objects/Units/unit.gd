@@ -72,6 +72,7 @@ func on_target_reached(target : PhysicsBody2D):
 
 func on_combat_attack(target):
 	set_state(State.ATTACK)
+	navigation.stop()
 	debug_target.text = "Target: " + target.name
 	pass
 
@@ -88,6 +89,7 @@ func on_combat_end_attack():
 	pass
 
 func on_target_out_of_range(target : PhysicsBody2D):
+	print_debug("on_target_out_of_range")
 	set_state(State.IDLE)
 	target_object(target)
 	pass
