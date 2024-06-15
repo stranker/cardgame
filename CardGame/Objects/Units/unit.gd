@@ -17,10 +17,10 @@ extends CharacterBody2D
 enum State { IDLE, MOVE, ATTACK, FOLLOW }
 var state : State = State.IDLE
 
-signal dead_unit(unit)
+signal destroy(unit)
 
 func _ready():
-	dead_unit.connect(SelectionManager.on_dead_unit)
+	destroy.connect(SelectionManager.on_dead_unit)
 	navigation.init(speed)
 	navigation.velocity_computed.connect(on_velocity_computed)
 	navigation.target_reached.connect(on_target_reached)
@@ -45,6 +45,7 @@ func do_action(data : SelectionManager.PointData, multiple_selection : bool):
 
 func move_to_position(pos : Vector2):
 	navigation.force_move_to_position(pos)
+	combat_component.reset()
 	pass
 
 func target_object(obj : Node2D):
@@ -97,7 +98,7 @@ func on_health_update(_health, _max_health):
 
 func on_health_dead():
 	print_debug("Dead!")
-	dead_unit.emit(self)
+	destroy.emit(self)
 	queue_free()
 	pass
 

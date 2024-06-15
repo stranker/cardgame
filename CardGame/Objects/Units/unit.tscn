@@ -88,7 +88,6 @@ debug_color = Color(0.787424, 0.101813, 1, 0.42)
 health_bar = NodePath("ProgressBar")
 
 [node name="ProgressBar" type="ProgressBar" parent="HealthComponent"]
-z_index = -1
 offset_left = -40.0
 offset_top = -48.0
 offset_right = 40.0

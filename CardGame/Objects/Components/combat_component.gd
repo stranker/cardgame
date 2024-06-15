@@ -30,17 +30,18 @@ func attack_target(target : Node2D):
 	current_target = target
 	can_attack = false
 	attack_timer.start()
+	if not target.destroy.is_connected(on_target_destroy):
+		target.destroy.connect(on_target_destroy)
 	var target_health_component : HealthComponent = target.get_node("HealthComponent")
-	if not target_health_component.dead.is_connected(on_target_dead):
-		target_health_component.dead.connect(on_target_dead)
 	attack.emit(target)
 	target_health_component.take_damage(damage)
 	pass
 
-func on_target_dead():
+func on_target_destroy(target):
 	print_debug("on_target_dead")
-	current_target = null
-	end_attack.emit()
+	if target == current_target:
+		current_target = null
+		end_attack.emit()
 	pass
 
 func _on_attack_timer_timeout():
@@ -50,4 +51,9 @@ func _on_attack_timer_timeout():
 		attack_target(current_target)
 	else:
 		target_out_of_range.emit(current_target)
+	pass
+
+func reset():
+	current_target = null
+	end_attack.emit()
 	pass
