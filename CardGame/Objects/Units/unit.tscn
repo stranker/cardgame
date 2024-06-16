@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=15 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="Texture2D" uid="uid://da2exxljc0mm3" path="res://Objects/Units/Soldier.png" id="1_m6fl0"]
@@ -29,6 +29,9 @@ corner_radius_bottom_left = 30
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2xa8"]
 radius = 16.0
 height = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pep51"]
+radius = 32.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot4i2"]
 bg_color = Color(0.91853, 0.217091, 3.85046e-07, 1)
@@ -66,7 +69,7 @@ shape = SubResource("CircleShape2D_08lj5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
 shape = SubResource("RectangleShape2D_chg2t")
-debug_color = Color(0.350929, 0.483167, 1, 0.42)
+debug_color = Color(0, 0.631373, 0.45098, 0)
 
 [node name="Panel" type="Panel" parent="SelectableComponent"]
 visible = false
@@ -80,12 +83,19 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3l2e5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
 shape = SubResource("CapsuleShape2D_h2xa8")
-debug_color = Color(0.787424, 0.101813, 1, 0.42)
+debug_color = Color(0.788235, 0.101961, 1, 0)
 
 [node name="NavigationComponent" parent="." instance=ExtResource("5_2vgb6")]
 
 [node name="CombatComponent" parent="." instance=ExtResource("6_vofuv")]
+collision_layer = 0
+collision_mask = 6
 min_attack_distance = 70.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatComponent"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_pep51")
+debug_color = Color(0.984314, 0, 0.352941, 0)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("7_ba8vd")]
 health_bar = NodePath("ProgressBar")

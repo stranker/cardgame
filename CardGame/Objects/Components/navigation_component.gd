@@ -19,6 +19,8 @@ func init(new_speed : float):
 func target_object(obj : Node2D):
 	print_debug("target_object")
 	target = obj
+	if not target.destroy.is_connected(on_target_destroyed):
+		target.destroy.connect(on_target_destroyed)
 	move_to_position(obj.global_position)
 	pass
 
@@ -35,7 +37,7 @@ func move_to_position(pos : Vector2):
 func _physics_process(delta):
 	if navigation_agent.is_navigation_finished():
 		return
-	if target:
+	if target != null and not target.is_queued_for_deletion():
 		move_to_position(target.global_position)
 		if global_position.distance_to(target.global_position) < min_distance_attack:
 			navigation_agent.target_position = get_parent().global_position
@@ -67,4 +69,8 @@ func _on_navigation_agent_2d_target_reached():
 func stop():
 	set_physics_process(false)
 	navigation_agent.target_position = global_position
+	pass
+
+func on_target_destroyed(target):
+	stop()
 	pass

@@ -5,6 +5,7 @@ extends Node2D
 @export var health : float
 @export var max_health : float
 @export var health_bar : ProgressBar
+@export var destructible : bool = true
 
 signal health_update(health, max_health)
 signal dead()
@@ -23,7 +24,7 @@ func heal(amount : float):
 	pass
 
 func take_damage(amount : float):
-	if health <= 0: return
+	if health <= 0 or not destructible: return
 	health -= amount
 	_clamp_health_and_update()
 	pass

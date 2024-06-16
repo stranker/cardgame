@@ -28,6 +28,7 @@ func _ready():
 	combat_component.end_attack.connect(on_combat_end_attack)
 	combat_component.attack.connect(on_combat_attack)
 	combat_component.target_out_of_range.connect(on_target_out_of_range)
+	combat_component.target_update.connect(on_target_update)
 	combat_component.init(damage, attack_speed)
 	health_component.init(health, max_health)
 	health_component.health_update.connect(on_health_update)
@@ -44,12 +45,14 @@ func do_action(data : SelectionManager.PointData, multiple_selection : bool):
 	pass
 
 func move_to_position(pos : Vector2):
+	set_state(State.MOVE)
 	navigation.force_move_to_position(pos)
 	combat_component.reset()
 	pass
 
 func target_object(obj : Node2D):
 	navigation.target_object(obj)
+	combat_component.set_target(obj)
 	debug_target.text = "Target: " + obj.name
 	pass
 
@@ -67,7 +70,7 @@ func on_position_reached():
 
 func on_target_reached(target : PhysicsBody2D):
 	velocity = Vector2.ZERO
-	combat_component.attack_target(target)
+	target_object(target)
 	pass
 
 func on_combat_attack(target):
@@ -85,7 +88,6 @@ func set_state(new_state : State):
 func on_combat_end_attack():
 	print_debug("on_combat_end_attack")
 	set_state(State.IDLE)
-	debug_target.text = "Target: No target"
 	pass
 
 func on_target_out_of_range(target : PhysicsBody2D):
@@ -106,4 +108,11 @@ func on_health_dead():
 
 func take_damage(amount : float):
 	health_component.take_damage(amount)
+	pass
+
+func on_target_update(target):
+	if target:
+		debug_target.text = "Target:" + target.name
+	else:
+		debug_target.text = "Target: No target"
 	pass

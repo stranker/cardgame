@@ -7,8 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bn42djc3lmgaf" path="res://Objects/Buildings/House.png" id="5_x2rgf"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="6_cnadg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmhxt"]
-size = Vector2(128, 64)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0t8ks"]
+radius = 20.0
+height = 112.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5llsy"]
 size = Vector2(128, 128)
@@ -57,8 +58,9 @@ scale = Vector2(2.25, 2.25)
 texture = ExtResource("5_x2rgf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_nmhxt")
+position = Vector2(0, 44)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_0t8ks")
 
 [node name="ConstructComponent" parent="." instance=ExtResource("4_iq34l")]
 
@@ -82,6 +84,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8aqbu")
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("6_cnadg")]
 health_bar = NodePath("ProgressBar")
+destructible = false
 
 [node name="ProgressBar" type="ProgressBar" parent="HealthComponent"]
 offset_left = -72.0

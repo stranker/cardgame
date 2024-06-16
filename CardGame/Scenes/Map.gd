@@ -8,8 +8,8 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_construct_success(card : Card):
-	#if card.card_data.card_type == ConstructManager.ConstructType.BUILDING:
-	#	bake_navigation_polygon()
+	if card.card_data.card_type == ConstructManager.ConstructType.BUILDING:
+		bake_navigation_polygon()
 	pass
 
 func _input(event : InputEvent):

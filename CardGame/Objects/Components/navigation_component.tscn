@@ -7,8 +7,9 @@ script = ExtResource("1_kg6vw")
 min_distance_attack = 40.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-target_desired_distance = 70.0
+target_desired_distance = 30.0
 path_max_distance = 200.0
+avoidance_enabled = true
 radius = 20.0
 debug_enabled = true
 debug_path_custom_color = Color(1, 0, 1, 1)
