@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwp7jntte1nfm"]
+[gd_scene load_steps=18 format=3 uid="uid://cwp7jntte1nfm"]
 
 [ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
 [ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="4_2e6cy"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="5_elbbj"]
 [ext_resource type="Texture2D" uid="uid://bn42djc3lmgaf" path="res://Objects/Buildings/House.png" id="5_x2rgf"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="6_cnadg"]
+[ext_resource type="Texture2D" uid="uid://b5mfihmx3xxqv" path="res://Objects/Units/target.png" id="6_smfmk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0t8ks"]
 radius = 20.0
@@ -17,17 +18,41 @@ size = Vector2(128, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_va0gn"]
 size = Vector2(144, 144)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aqbu"]
-bg_color = Color(0, 1, 0, 0.337255)
-border_width_left = 8
-border_width_top = 8
-border_width_right = 8
-border_width_bottom = 8
-border_color = Color(0, 0.976471, 0, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv61r"]
+atlas = ExtResource("6_smfmk")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwprv"]
+atlas = ExtResource("6_smfmk")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anltg"]
+atlas = ExtResource("6_smfmk")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv4hl"]
+atlas = ExtResource("6_smfmk")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ussux"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pv61r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwprv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anltg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv4hl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l20cg"]
 bg_color = Color(0.91853, 0.217091, 3.85046e-07, 1)
@@ -67,20 +92,21 @@ shape = SubResource("CapsuleShape2D_0t8ks")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
 shape = SubResource("RectangleShape2D_5llsy")
 
-[node name="SelectableComponent" parent="." instance=ExtResource("5_elbbj")]
+[node name="SelectableComponent" parent="." node_paths=PackedStringArray("select_target") instance=ExtResource("5_elbbj")]
+select_target = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SelectableComponent"]
 shape = SubResource("RectangleShape2D_va0gn")
 debug_color = Color(0.440776, 0.460355, 0.983463, 0.42)
 
-[node name="Panel" type="Panel" parent="SelectableComponent"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SelectableComponent"]
 visible = false
 z_index = -1
-offset_left = -72.0
-offset_top = 12.0
-offset_right = 72.0
-offset_bottom = 83.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_8aqbu")
+position = Vector2(0, 40)
+scale = Vector2(3.33333, 2)
+sprite_frames = SubResource("SpriteFrames_ussux")
+autoplay = "default"
+frame_progress = 0.52313
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("6_cnadg")]
 health_bar = NodePath("ProgressBar")

@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=21 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
-[ext_resource type="Texture2D" uid="uid://da2exxljc0mm3" path="res://Objects/Units/Soldier.png" id="1_m6fl0"]
+[ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="2_auhh5"]
 [ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="2_nyxvx"]
 [ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="3_324de"]
+[ext_resource type="Texture2D" uid="uid://bmmaovdvfe7xt" path="res://Objects/Units/leatherarmor.png" id="3_rjnvx"]
 [ext_resource type="PackedScene" uid="uid://cfsn81qx1jkhb" path="res://Objects/Components/navigation_component.tscn" id="5_2vgb6"]
+[ext_resource type="Texture2D" uid="uid://b5mfihmx3xxqv" path="res://Objects/Units/target.png" id="5_f008r"]
 [ext_resource type="PackedScene" uid="uid://cfgnovjrv8ylr" path="res://Objects/Components/combat_component.tscn" id="6_vofuv"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="7_ba8vd"]
 
@@ -14,24 +16,48 @@ radius = 16.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_chg2t"]
 size = Vector2(48, 64)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3l2e5"]
-bg_color = Color(0, 1, 0, 0.337255)
-border_width_left = 8
-border_width_top = 8
-border_width_right = 8
-border_width_bottom = 8
-border_color = Color(0, 0.976471, 0, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+[sub_resource type="AtlasTexture" id="AtlasTexture_a32ep"]
+atlas = ExtResource("5_f008r")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfc6v"]
+atlas = ExtResource("5_f008r")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8cmf"]
+atlas = ExtResource("5_f008r")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtod8"]
+atlas = ExtResource("5_f008r")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vvefq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a32ep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfc6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8cmf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtod8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2xa8"]
 radius = 16.0
 height = 64.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pep51"]
-radius = 32.0
+radius = 40.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot4i2"]
 bg_color = Color(0.91853, 0.217091, 3.85046e-07, 1)
@@ -50,34 +76,43 @@ corner_radius_bottom_left = 6
 [node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target") groups=["Unit"]]
 collision_layer = 4
 collision_mask = 6
+motion_mode = 1
+slide_on_ceiling = false
+floor_stop_on_slope = false
+floor_constant_speed = true
+floor_block_on_wall = false
+safe_margin = 1.0
 script = ExtResource("1_i3mpu")
 debug_state = NodePath("Debug/Items/State")
 debug_target = NodePath("Debug/Items/Target")
 
-[node name="Visual" type="Node2D" parent="."]
-texture_filter = 1
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("construct_component") instance=ExtResource("2_auhh5")]
+construct_component = NodePath("../ConstructComponent")
 
-[node name="Sprite2D" type="Sprite2D" parent="Visual"]
-texture = ExtResource("1_m6fl0")
+[node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
+position = Vector2(-3, 0)
+texture = ExtResource("3_rjnvx")
 hframes = 5
+vframes = 9
+frame = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 16)
 shape = SubResource("CircleShape2D_08lj5")
 
-[node name="SelectableComponent" parent="." instance=ExtResource("2_nyxvx")]
+[node name="SelectableComponent" parent="." node_paths=PackedStringArray("select_target") instance=ExtResource("2_nyxvx")]
+select_target = NodePath("Target")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectableComponent"]
 shape = SubResource("RectangleShape2D_chg2t")
 debug_color = Color(0, 0.631373, 0.45098, 0)
 
-[node name="Panel" type="Panel" parent="SelectableComponent"]
-visible = false
+[node name="Target" type="AnimatedSprite2D" parent="SelectableComponent"]
 z_index = -1
-offset_left = -31.0
-offset_right = 30.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_3l2e5")
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_vvefq")
+autoplay = "default"
+frame_progress = 0.0596839
 
 [node name="ConstructComponent" parent="." instance=ExtResource("3_324de")]
 
@@ -140,3 +175,9 @@ layout_mode = 2
 text = "Target: null"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="state_update" from="." to="NavigationComponent" method="_on_unit_state_update"]
+[connection signal="unit_deselected" from="." to="HealthComponent" method="_on_unit_unit_deselected"]
+[connection signal="unit_selected" from="." to="HealthComponent" method="_on_unit_unit_selected"]
+[connection signal="deselected" from="SelectableComponent" to="." method="_on_selectable_component_deselected"]
+[connection signal="selected" from="SelectableComponent" to="." method="_on_selectable_component_selected"]

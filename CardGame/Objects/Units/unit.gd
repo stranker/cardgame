@@ -17,7 +17,10 @@ extends CharacterBody2D
 enum State { IDLE, MOVE, ATTACK, FOLLOW }
 var state : State = State.IDLE
 
+signal state_update(state)
 signal destroy(unit)
+signal unit_selected()
+signal unit_deselected()
 
 func _ready():
 	destroy.connect(SelectionManager.on_dead_unit)
@@ -45,12 +48,14 @@ func do_action(data : SelectionManager.PointData, multiple_selection : bool):
 	pass
 
 func move_to_position(pos : Vector2):
+	print_debug("move_to_position")
 	set_state(State.MOVE)
 	navigation.force_move_to_position(pos)
 	combat_component.reset()
 	pass
 
 func target_object(obj : Node2D):
+	print_debug("target_object")
 	navigation.target_object(obj)
 	combat_component.set_target(obj)
 	debug_target.text = "Target: " + obj.name
@@ -58,7 +63,6 @@ func target_object(obj : Node2D):
 
 func on_velocity_computed(vel : Vector2):
 	if state == State.ATTACK: return
-	set_state(State.MOVE)
 	velocity = vel
 	move_and_slide()
 	pass
@@ -69,20 +73,22 @@ func on_position_reached():
 	pass
 
 func on_target_reached(target : PhysicsBody2D):
+	set_state(State.IDLE)
 	velocity = Vector2.ZERO
 	target_object(target)
 	pass
 
 func on_combat_attack(target):
 	set_state(State.ATTACK)
-	navigation.stop()
 	debug_target.text = "Target: " + target.name
 	pass
 
 func set_state(new_state : State):
-	#print_debug("State:" + str(State.keys()[new_state]))
-	debug_state.text = "State: " + str(State.keys()[new_state])
+	if state == new_state: return
+	print_debug("State:" + str(State.keys()[new_state]))
 	state = new_state
+	debug_state.text = "State: " + str(State.keys()[state])
+	state_update.emit(state)
 	pass
 
 func on_combat_end_attack():
@@ -116,3 +122,13 @@ func on_target_update(target):
 	else:
 		debug_target.text = "Target: No target"
 	pass
+
+
+func _on_selectable_component_selected():
+	unit_selected.emit()
+	pass # Replace with function body.
+
+
+func _on_selectable_component_deselected():
+	unit_deselected.emit()
+	pass # Replace with function body.

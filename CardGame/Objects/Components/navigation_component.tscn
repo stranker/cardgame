@@ -7,12 +7,20 @@ script = ExtResource("1_kg6vw")
 min_distance_attack = 40.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
 target_desired_distance = 30.0
-path_max_distance = 200.0
+path_max_distance = 10.0
 avoidance_enabled = true
 radius = 20.0
 debug_enabled = true
+debug_use_custom = true
 debug_path_custom_color = Color(1, 0, 1, 1)
+debug_path_custom_point_size = 10.0
+debug_path_custom_line_width = 6.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
 
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

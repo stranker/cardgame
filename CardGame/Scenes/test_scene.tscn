@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvb1a2n1km56e"]
+[gd_scene load_steps=5 format=3 uid="uid://dvb1a2n1km56e"]
 
 [ext_resource type="PackedScene" uid="uid://inamvh6wypre" path="res://Objects/card_holder.tscn" id="1_jijr5"]
 [ext_resource type="Script" path="res://Scenes/Map.gd" id="1_xlx38"]
+[ext_resource type="PackedScene" uid="uid://cqgw352wklrr4" path="res://Objects/Units/unit.tscn" id="2_7xgoi"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2i3st"]
 vertices = PackedVector2Array(1910, 1078, 18, 1078, 10, 9, 1925, -5)
@@ -15,6 +16,169 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 y_sort_enabled = true
 navigation_polygon = SubResource("NavigationPolygon_2i3st")
 script = ExtResource("1_xlx38")
+
+[node name="Unit" parent="Map" instance=ExtResource("2_7xgoi")]
+position = Vector2(344, 320)
+
+[node name="Unit2" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(600, 336)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit3" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(936, 520)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit4" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(584, 616)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit5" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(352, 664)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit6" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1000, 696)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit7" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1496, 634)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit8" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1560, 264)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit9" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1280, 431)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit10" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1088, 192)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit11" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(848, 408)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit12" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(720, 632)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit13" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(568, 832)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit14" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(304, 896)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit15" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(88, 554)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit16" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(176, 240)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit17" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1176, 784)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit18" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1600, 984)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit19" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1680, 736)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit20" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1649, 391)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit21" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1760, 48)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit22" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1328, 96)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit23" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(808, 104)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit24" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(488, 96)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit25" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(206, 458)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit26" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(152, 784)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit27" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(128, 968)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit28" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(392, 1064)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit29" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(800, 984)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit30" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1192, 1048)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit31" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1297, 928)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit32" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1472, 784)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
+
+[node name="Unit33" parent="Map" node_paths=PackedStringArray("debug_state", "debug_target") instance=ExtResource("2_7xgoi")]
+position = Vector2(1472, 784)
+debug_state = NodePath("../Unit/Debug/Items/State")
+debug_target = NodePath("../Unit/Debug/Items/Target")
 
 [node name="CardHolder" parent="." instance=ExtResource("1_jijr5")]
 position = Vector2(960, 896)

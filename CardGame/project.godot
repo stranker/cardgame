@@ -53,3 +53,5 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_3="Unit"
 2d_physics/layer_4="Selection"
 2d_physics/layer_5="Construct"
+avoidance/layer_1="Player"
+avoidance/layer_2="Enemy"

@@ -6,6 +6,7 @@ extends Node2D
 @export var min_distance_attack : float = 20.0
 var speed : float = 0
 var target : Node2D
+var target_position : Vector2
 
 signal velocity_computed(vel)
 signal position_reached()
@@ -30,7 +31,9 @@ func force_move_to_position(pos : Vector2):
 	pass
 
 func move_to_position(pos : Vector2):
+	$Timer.start()
 	navigation_agent.target_position = pos
+	target_position = pos
 	set_physics_process(true)
 	pass
 
@@ -46,7 +49,10 @@ func _physics_process(delta):
 	var steering = new_velocity - navigation_agent.velocity
 	var vel = navigation_agent.velocity
 	vel += steering
-	_on_velocity_computed(vel)
+	if navigation_agent.avoidance_enabled:
+		navigation_agent.velocity = vel
+	else:
+		_on_velocity_computed(vel)
 	pass
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
@@ -58,19 +64,31 @@ func _on_velocity_computed(vel : Vector2):
 	pass
 
 func _on_navigation_agent_2d_target_reached():
-	if target != null and not target.is_queued_for_deletion():
-		target_reached.emit(target)
+	if is_instance_valid(target):
 		print_debug("Target Reached:", target.name)
+		target_reached.emit(target)
 	else:
 		position_reached.emit()
-	set_physics_process(false)
+	$Timer.stop()
 	pass # Replace with function body.
 
-func stop():
-	set_physics_process(false)
-	navigation_agent.target_position = global_position
+func on_target_destroyed(target):
 	pass
 
-func on_target_destroyed(target):
-	stop()
+func _on_unit_state_update(state : Unit.State):
+	match state:
+		Unit.State.ATTACK:
+			print_debug("_on_unit_state_update ATTACK")
+	pass # Replace with function body.
+
+
+func _on_timer_timeout():
+	_recalculate_path()
+	pass # Replace with function body.
+
+func _recalculate_path():
+	if is_instance_valid(target):
+		navigation_agent.target_position = target.global_position
+	else:
+		navigation_agent.target_position = target_position
 	pass

@@ -10,6 +10,10 @@ extends Node2D
 signal health_update(health, max_health)
 signal dead()
 
+func _ready():
+	health_bar.hide()
+	pass
+
 func init(_health, _max_health):
 	health = _health
 	max_health = _max_health
@@ -37,3 +41,11 @@ func _clamp_health_and_update():
 	else:
 		dead.emit()
 	pass
+
+func _on_unit_unit_selected():
+	health_bar.show()
+	pass # Replace with function body.
+
+func _on_unit_unit_deselected():
+	health_bar.hide()
+	pass # Replace with function body.

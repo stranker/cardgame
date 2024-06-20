@@ -4,31 +4,32 @@ extends Area2D
 
 @export var is_selected : bool = false
 @export var size_offset : Vector2 = Vector2(10, 10)
-var select_panel : Panel
+@export var select_target : AnimatedSprite2D
 var size : Vector2
 var rect_size : Rect2
 var is_mouse_inside : bool = false
 
 signal selected()
+signal deselected()
 signal action_target()
 
 func _ready():
 	size = get_child(0).shape.size + size_offset
 	selected.connect(SelectionManager.add_selected_object.bind(get_parent()))
 	action_target.connect(SelectionManager.on_action_target.bind(get_parent()))
-	select_panel = get_child(1)
-	select_panel.hide()
+	select_target.hide()
 	pass
 
 func select():
 	is_selected = true
 	selected.emit()
-	select_panel.show()
+	select_target.show()
 	pass
 
 func deselect():
 	is_selected = false
-	select_panel.hide()
+	select_target.hide()
+	deselected.emit()
 	pass
 
 func _unhandled_input(event : InputEvent):
