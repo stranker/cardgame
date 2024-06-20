@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=40 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="2_auhh5"]
@@ -9,6 +9,165 @@
 [ext_resource type="Texture2D" uid="uid://b5mfihmx3xxqv" path="res://Objects/Units/target.png" id="5_f008r"]
 [ext_resource type="PackedScene" uid="uid://cfgnovjrv8ylr" path="res://Objects/Components/combat_component.tscn" id="6_vofuv"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="7_ba8vd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppw0t"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 768, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvfh8"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 768, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_382hy"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bxkb"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iwbs"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 480, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csgpd"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 480, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fyrm"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 672, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vydb2"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(192, 672, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqks7"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 672, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjbrd"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(288, 672, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxums"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkver"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnoe6"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(192, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wh06"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(288, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwagv"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(0, 384, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir8di"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(96, 384, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3s7v"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(192, 384, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ifbp"]
+atlas = ExtResource("3_rjnvx")
+region = Rect2(288, 384, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nndch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppw0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvfh8")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_382hy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bxkb")
+}],
+"loop": true,
+"name": &"idle_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iwbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csgpd")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fyrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vydb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqks7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjbrd")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxums")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkver")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnoe6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wh06")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwagv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir8di")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3s7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ifbp")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_08lj5"]
 radius = 16.0
@@ -86,15 +245,14 @@ script = ExtResource("1_i3mpu")
 debug_state = NodePath("Debug/Items/State")
 debug_target = NodePath("Debug/Items/Target")
 
-[node name="VisualComponent" parent="." node_paths=PackedStringArray("construct_component") instance=ExtResource("2_auhh5")]
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("construct_component", "sprites") instance=ExtResource("2_auhh5")]
 construct_component = NodePath("../ConstructComponent")
+sprites = [NodePath("Sprite2D")]
 
-[node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="VisualComponent"]
 position = Vector2(-3, 0)
-texture = ExtResource("3_rjnvx")
-hframes = 5
-vframes = 9
-frame = 30
+sprite_frames = SubResource("SpriteFrames_nndch")
+animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 16)
@@ -177,7 +335,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="state_update" from="." to="NavigationComponent" method="_on_unit_state_update"]
-[connection signal="unit_deselected" from="." to="HealthComponent" method="_on_unit_unit_deselected"]
-[connection signal="unit_selected" from="." to="HealthComponent" method="_on_unit_unit_selected"]
 [connection signal="deselected" from="SelectableComponent" to="." method="_on_selectable_component_deselected"]
 [connection signal="selected" from="SelectableComponent" to="." method="_on_selectable_component_selected"]

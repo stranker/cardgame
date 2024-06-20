@@ -19,9 +19,9 @@ func _ready():
 	var house = load("res://Objects/Cards/house_data.tres")
 	_create_card(house)
 	_create_card(house)
-	#_create_card(unit)
-	#_create_card(unit)
-	#_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
 	pass
 
 func _create_card(data : CardData):

@@ -1,16 +1,16 @@
 [gd_scene load_steps=18 format=3 uid="uid://cwp7jntte1nfm"]
 
 [ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
+[ext_resource type="Texture2D" uid="uid://cgea2irh4lgi6" path="res://Objects/Units/tilesheet.png" id="3_vfced"]
 [ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="4_2e6cy"]
 [ext_resource type="PackedScene" uid="uid://bnhp8xorl5mht" path="res://Objects/Components/construct_component.tscn" id="4_iq34l"]
 [ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="5_elbbj"]
-[ext_resource type="Texture2D" uid="uid://bn42djc3lmgaf" path="res://Objects/Buildings/House.png" id="5_x2rgf"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="6_cnadg"]
 [ext_resource type="Texture2D" uid="uid://b5mfihmx3xxqv" path="res://Objects/Units/target.png" id="6_smfmk"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0t8ks"]
-radius = 20.0
-height = 112.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wh8cu"]
+radius = 40.0
+height = 126.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5llsy"]
 size = Vector2(128, 128)
@@ -78,14 +78,17 @@ construct_component = NodePath("../ConstructComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
 texture_filter = 1
-position = Vector2(0, 11)
-scale = Vector2(2.25, 2.25)
-texture = ExtResource("5_x2rgf")
+position = Vector2(0, 56)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_vfced")
+offset = Vector2(2.5, -187.5)
+region_enabled = true
+region_rect = Rect2(151.949, 476.667, 323.487, 450.154)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 44)
+position = Vector2(0, 24)
 rotation = -1.57079
-shape = SubResource("CapsuleShape2D_0t8ks")
+shape = SubResource("CapsuleShape2D_wh8cu")
 
 [node name="ConstructComponent" parent="." instance=ExtResource("4_iq34l")]
 
@@ -106,7 +109,7 @@ position = Vector2(0, 40)
 scale = Vector2(3.33333, 2)
 sprite_frames = SubResource("SpriteFrames_ussux")
 autoplay = "default"
-frame_progress = 0.52313
+frame_progress = 0.767232
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("6_cnadg")]
 health_bar = NodePath("ProgressBar")
@@ -121,3 +124,6 @@ theme_override_styles/background = SubResource("StyleBoxFlat_l20cg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_yass3")
 value = 50.0
 show_percentage = false
+
+[connection signal="deselected" from="SelectableComponent" to="." method="_on_selectable_component_deselected"]
+[connection signal="selected" from="SelectableComponent" to="." method="_on_selectable_component_selected"]

@@ -42,10 +42,6 @@ func _clamp_health_and_update():
 		dead.emit()
 	pass
 
-func _on_unit_unit_selected():
-	health_bar.show()
-	pass # Replace with function body.
-
-func _on_unit_unit_deselected():
-	health_bar.hide()
-	pass # Replace with function body.
+func object_select_update(is_selected : bool):
+	health_bar.visible = is_selected
+	pass

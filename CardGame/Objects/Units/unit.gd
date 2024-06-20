@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var navigation : NavigationComponent = $NavigationComponent
 @onready var combat_component : CombatComponent = $CombatComponent
 @onready var health_component : HealthComponent = $HealthComponent
+@onready var select_component : SelectableComponent = $SelectableComponent
+@onready var visual_component : VisualComponent = $VisualComponent
 @export var is_enemy : bool = false
 @export var debug_state : Label
 @export var debug_target : Label
@@ -19,8 +21,6 @@ var state : State = State.IDLE
 
 signal state_update(state)
 signal destroy(unit)
-signal unit_selected()
-signal unit_deselected()
 
 func _ready():
 	destroy.connect(SelectionManager.on_dead_unit)
@@ -36,6 +36,8 @@ func _ready():
 	health_component.init(health, max_health)
 	health_component.health_update.connect(on_health_update)
 	health_component.dead.connect(on_health_dead)
+	select_component.selected.connect(on_unit_selected)
+	select_component.deselected.connect(on_unit_deselected)
 	pass
 
 func do_action(data : SelectionManager.PointData, multiple_selection : bool):
@@ -64,6 +66,7 @@ func target_object(obj : Node2D):
 func on_velocity_computed(vel : Vector2):
 	if state == State.ATTACK: return
 	velocity = vel
+	visual_component.set_direction(velocity.normalized())
 	move_and_slide()
 	pass
 
@@ -123,12 +126,10 @@ func on_target_update(target):
 		debug_target.text = "Target: No target"
 	pass
 
-
-func _on_selectable_component_selected():
-	unit_selected.emit()
+func on_unit_selected():
+	health_component.object_select_update(true)
 	pass # Replace with function body.
 
-
-func _on_selectable_component_deselected():
-	unit_deselected.emit()
+func on_unit_deselected():
+	health_component.object_select_update(false)
 	pass # Replace with function body.
