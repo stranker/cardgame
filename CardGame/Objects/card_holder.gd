@@ -22,6 +22,10 @@ func _ready():
 	_create_card(unit)
 	_create_card(unit)
 	_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
+	_create_card(unit)
 	pass
 
 func _create_card(data : CardData):

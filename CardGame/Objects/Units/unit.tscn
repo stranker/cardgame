@@ -212,8 +212,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2xa8"]
-radius = 16.0
-height = 64.0
+radius = 24.0
+height = 80.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pep51"]
 radius = 40.0
@@ -283,12 +283,14 @@ frame_progress = 0.0596839
 [node name="ConstructComponent" parent="." instance=ExtResource("3_324de")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
+z_index = -1
 shape = SubResource("CapsuleShape2D_h2xa8")
 debug_color = Color(0.788235, 0.101961, 1, 0)
 
 [node name="NavigationComponent" parent="." instance=ExtResource("5_2vgb6")]
 
 [node name="CombatComponent" parent="." instance=ExtResource("6_vofuv")]
+z_index = -1
 collision_layer = 0
 collision_mask = 6
 min_attack_distance = 70.0

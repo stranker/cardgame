@@ -54,8 +54,11 @@ func _ready():
 func do_action(data : SelectionManager.PointData, multiple_selection : bool):
 	if is_dummy: return
 	if data.object == self: return
-	if data.object and data.object.is_enemy:
-		target_object(data.object)
+	if data.object:
+		if data.object.is_enemy:
+			target_object(data.object)
+		else:
+			move_to_closest_position(data.position)
 	else:
 		move_to_position(data.position)
 	pass
@@ -65,6 +68,11 @@ func move_to_position(pos : Vector2):
 	set_state(State.MOVE)
 	navigation.force_move_to_position(pos)
 	combat_component.reset()
+	pass
+
+func move_to_closest_position(pos : Vector2):
+	var new_pos = pos + Vector2(randf_range(-50,50),randf_range(-50,50))
+	move_to_position(new_pos)
 	pass
 
 func target_object(obj : Node2D):

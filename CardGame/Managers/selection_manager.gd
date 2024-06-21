@@ -165,9 +165,20 @@ func _process_selected_objects(event : InputEventMouse):
 	pass
 
 func _process_point_data_on_objects(data : PointData):
+	var rand_radius = selected_objects.size() * 10
+	var angles_degrees = 360.0 / selected_objects.size()
+	print_debug("angles_degrees:", angles_degrees)
+	var accum_degrees = 0
 	for object in selected_objects:
+		var new_data : PointData = PointData.new()
+		new_data.object = data.object
+		var new_pos = data.position + Vector2(cos(deg_to_rad(accum_degrees)), sin(deg_to_rad(accum_degrees))) * rand_radius
+		new_data.position = new_pos
+		print_debug(new_data, data)
 		if object.has_method("do_action"):
-			object.do_action(data, false)
+			object.do_action(new_data, false)
+		accum_degrees += angles_degrees
+		print_debug("accum_degrees:", accum_degrees)
 	pass
 
 func on_map_event(event : InputEventMouse):
