@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cqgw352wklrr4"]
+[gd_scene load_steps=42 format=3 uid="uid://cqgw352wklrr4"]
 
 [ext_resource type="Script" path="res://Objects/Units/unit.gd" id="1_i3mpu"]
 [ext_resource type="PackedScene" uid="uid://b0713h3mysyhv" path="res://Objects/Components/visual_component.tscn" id="2_auhh5"]
@@ -232,7 +232,13 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target") groups=["Unit"]]
+[sub_resource type="LabelSettings" id="LabelSettings_ixtts"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_bxovw"]
+font_size = 12
+
+[node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target", "debug_name") groups=["Unit"]]
 collision_layer = 4
 collision_mask = 6
 motion_mode = 1
@@ -244,15 +250,17 @@ safe_margin = 1.0
 script = ExtResource("1_i3mpu")
 debug_state = NodePath("Debug/Items/State")
 debug_target = NodePath("Debug/Items/Target")
+debug_name = NodePath("Debug/Items/Name")
 
 [node name="VisualComponent" parent="." node_paths=PackedStringArray("construct_component", "sprites") instance=ExtResource("2_auhh5")]
 construct_component = NodePath("../ConstructComponent")
 sprites = [NodePath("Sprite2D")]
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="VisualComponent"]
-position = Vector2(-3, 0)
+position = Vector2(0, 24)
 sprite_frames = SubResource("SpriteFrames_nndch")
 animation = &"idle_up"
+offset = Vector2(-3, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 16)
@@ -322,18 +330,26 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Name" type="Label" parent="Debug/Items"]
+layout_mode = 2
+text = "Name: Placeholder"
+label_settings = SubResource("LabelSettings_ixtts")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="State" type="Label" parent="Debug/Items"]
 layout_mode = 2
 text = "State: IDLE"
+label_settings = SubResource("LabelSettings_ixtts")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Target" type="Label" parent="Debug/Items"]
 layout_mode = 2
 text = "Target: null"
+label_settings = SubResource("LabelSettings_bxovw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="state_update" from="." to="NavigationComponent" method="_on_unit_state_update"]
 [connection signal="deselected" from="SelectableComponent" to="." method="_on_selectable_component_deselected"]
 [connection signal="selected" from="SelectableComponent" to="." method="_on_selectable_component_selected"]

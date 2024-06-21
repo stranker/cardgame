@@ -13,25 +13,29 @@ signal end_attack()
 signal target_out_of_range(target)
 signal target_update(target)
 
+func _ready():
+	end_attack.connect(on_end_attack)
+	pass
+
 func init(_damage : float, _attack_speed : float):
 	damage = _damage
 	attack_speed = _attack_speed
 	pass
 
 func set_target(target : PhysicsBody2D):
-	print_debug("set_target:", target.name)
+	#print_debug("set_target:", target.name)
 	current_target = target
 	pass
 
 func _attack():
 	if not can_attack: return
+	#print_debug("_attack")
 	can_attack = false
+	attack.emit(current_target)
 	if not current_target.destroy.is_connected(on_target_destroy):
 		current_target.destroy.connect(on_target_destroy)
-	var target_health_component : HealthComponent = current_target.get_node("HealthComponent")
-	attack.emit(current_target)
-	target_health_component.take_damage(damage)
-	await get_tree().create_timer(attack_speed)
+	current_target.take_damage(damage)
+	await get_tree().create_timer(attack_speed).timeout
 	can_attack = true
 	end_attack.emit()
 	pass
@@ -47,9 +51,13 @@ func reset():
 	target_update.emit(current_target)
 	pass
 
+func on_end_attack():
+	if is_instance_valid(current_target):
+		_attack()
+	pass
+
 func _on_body_entered(body):
 	if body != current_target: return
-	print_debug("ATTACK")
 	_attack()
 	pass # Replace with function body.
 

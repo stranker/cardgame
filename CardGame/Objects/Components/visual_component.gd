@@ -61,3 +61,15 @@ func _process_dir(dir : Vector2):
 			else:
 				anim_sprite.play("idle_side")
 	pass
+
+func hit():
+	var tween_before : Tween = create_tween()
+	tween_before.tween_property(self, "rotation_degrees", randi_range(-20, 20), 0.1)
+	tween_before.play()
+	modulate = Color.RED
+	await get_tree().create_timer(0.5).timeout
+	var tween_after : Tween = create_tween()
+	tween_after.tween_property(self, "rotation_degrees", 0, 0.1)
+	tween_after.play()
+	modulate = Color.WHITE
+	pass

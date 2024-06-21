@@ -18,7 +18,7 @@ func init(new_speed : float):
 	pass
 
 func target_object(obj : Node2D):
-	print_debug("target_object")
+	#print_debug("target_object")
 	target = obj
 	if not target.destroy.is_connected(on_target_destroyed):
 		target.destroy.connect(on_target_destroyed)
@@ -35,6 +35,11 @@ func move_to_position(pos : Vector2):
 	navigation_agent.target_position = pos
 	target_position = pos
 	set_physics_process(true)
+	pass
+
+func set_enable(value : bool):
+	navigation_agent.avoidance_enabled = value
+	set_physics_process(value)
 	pass
 
 func _physics_process(delta):
@@ -65,7 +70,7 @@ func _on_velocity_computed(vel : Vector2):
 
 func _on_navigation_agent_2d_target_reached():
 	if is_instance_valid(target):
-		print_debug("Target Reached:", target.name)
+		#print_debug("Target Reached:", target.name)
 		target_reached.emit(target)
 	else:
 		position_reached.emit()
@@ -74,13 +79,6 @@ func _on_navigation_agent_2d_target_reached():
 
 func on_target_destroyed(target):
 	pass
-
-func _on_unit_state_update(state : Unit.State):
-	match state:
-		Unit.State.ATTACK:
-			print_debug("_on_unit_state_update ATTACK")
-	pass # Replace with function body.
-
 
 func _on_timer_timeout():
 	_recalculate_path()

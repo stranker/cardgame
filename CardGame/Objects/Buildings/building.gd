@@ -17,6 +17,10 @@ func _ready():
 	select_component.deselected.connect(on_building_deselected)
 	pass
 
+func take_damage(amount : float):
+	health_component.take_damage(amount)
+	pass
+
 func do_action(data : SelectionManager.PointData, multiple_selection : bool):
 	pass
 

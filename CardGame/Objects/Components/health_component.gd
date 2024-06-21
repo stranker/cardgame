@@ -8,6 +8,7 @@ extends Node2D
 @export var destructible : bool = true
 
 signal health_update(health, max_health)
+signal hit()
 signal dead()
 
 func _ready():
@@ -28,6 +29,7 @@ func heal(amount : float):
 	pass
 
 func take_damage(amount : float):
+	hit.emit()
 	if health <= 0 or not destructible: return
 	health -= amount
 	_clamp_health_and_update()
