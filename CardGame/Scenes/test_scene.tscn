@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvb1a2n1km56e"]
+[gd_scene load_steps=6 format=3 uid="uid://dvb1a2n1km56e"]
 
 [ext_resource type="PackedScene" uid="uid://inamvh6wypre" path="res://Objects/card_holder.tscn" id="1_jijr5"]
 [ext_resource type="Script" path="res://Scenes/Map.gd" id="1_xlx38"]
 [ext_resource type="PackedScene" uid="uid://cqgw352wklrr4" path="res://Objects/Units/unit.tscn" id="2_kubd6"]
+[ext_resource type="PackedScene" uid="uid://cwp7jntte1nfm" path="res://Objects/Buildings/building.tscn" id="3_bx24u"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2i3st"]
 vertices = PackedVector2Array(1910, 1078, 18, 1078, 10, 9, 1925, -5)
@@ -19,6 +20,11 @@ script = ExtResource("1_xlx38")
 
 [node name="Unit" parent="Map" instance=ExtResource("2_kubd6")]
 position = Vector2(1056, 490)
+is_enemy = true
+is_dummy = true
+
+[node name="Building" parent="Map" instance=ExtResource("3_bx24u")]
+position = Vector2(384, 384)
 is_enemy = true
 is_dummy = true
 

@@ -9,7 +9,7 @@ class_name Card
 var initial_position : Vector2
 var mid_position : Vector2
 var rotation_factor : float = 0
-var is_highligthed : bool = false
+var is_highlighted : bool = false
 
 enum MovementState { IDLE, DRAG }
 enum PickState { DISABLED, ENABLED }
@@ -23,12 +23,16 @@ enum PickState { DISABLED, ENABLED }
 
 signal card_picked(card)
 signal card_dropped(card)
-signal card_highlighted(card)
+signal card_try_highlighted(card)
+signal card_unhighlighted(card)
+signal card_highligthed(card)
 
 func _ready():
 	mid_position = Vector2(get_viewport_rect().size.x * 0.5, global_position.y)
 	card_picked.connect(SelectionManager.on_card_selected)
 	card_dropped.connect(SelectionManager.on_card_deselected)
+	card_try_highlighted.connect(SelectionManager.on_card_try_highligthed)
+	card_unhighlighted.connect(SelectionManager.on_card_unhighligthed)
 	card_picked.connect(ConstructManager.on_card_picked)
 	card_dropped.connect(ConstructManager.on_card_dropped)
 	pass
@@ -82,23 +86,27 @@ func reset():
 
 
 func _on_interact_mouse_entered():
-	if pick_state == PickState.DISABLED or is_highligthed: return
-	is_highligthed = true
-	anim.play("Highlighted")
-	card_highlighted.emit(self)
+	if pick_state == PickState.DISABLED: return
+	card_try_highlighted.emit(self)
 	pass # Replace with function body.
 
 
 func _on_interact_mouse_exited():
 	if pick_state == PickState.DISABLED: return
-	unhighlight()
-	is_highligthed = false
+	card_unhighlighted.emit(self)
 	pass # Replace with function body.
 
-
 func unhighlight():
-	if not is_highligthed: return
+	if not is_highlighted: return
+	is_highlighted = false
 	anim.play_backwards("Highlighted")
+	pass
+
+func highlight():
+	if is_highlighted: return
+	is_highlighted = true
+	card_highligthed.emit(self)
+	anim.play("Highlighted")
 	pass
 
 func _on_interact_input_event(viewport, event, shape_idx):

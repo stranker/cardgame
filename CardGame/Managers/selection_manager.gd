@@ -16,6 +16,8 @@ enum SelectionState { IDLE, SELECT, END_SELECT }
 var interaction_state : InteractionState = InteractionState.OBJECT
 var selection_state : SelectionState = SelectionState.IDLE
 
+var cards_highligthed_queue : Array[Card]
+
 class PointData:
 	var position : Vector2
 	var object : Node2D
@@ -109,9 +111,11 @@ func _end_selection_area(pos : Vector2):
 	queue_redraw()
 	pass
 
-func on_card_selected(_card : Card):
+func on_card_selected(card : Card):
 	interaction_state = InteractionState.CARD
 	selection_state = SelectionState.IDLE
+	if cards_highligthed_queue.has(card):
+		cards_highligthed_queue.erase(card)
 	_reset_selection_area()
 	queue_redraw()
 	pass
@@ -129,6 +133,26 @@ func on_card_deselected(_card : Card):
 	interaction_state = InteractionState.OBJECT
 	selection_state = SelectionState.IDLE
 	queue_redraw()
+	pass
+
+func on_card_try_highligthed(card : Card):
+	print_debug("on_card_try_highligthed:", cards_highligthed_queue)
+	if cards_highligthed_queue.has(card): return
+	if card.is_queued_for_deletion(): return
+	if not is_instance_valid(card): return
+	cards_highligthed_queue.append(card)
+	if cards_highligthed_queue.size() == 1:
+		card.highlight()
+	pass
+
+func on_card_unhighligthed(card : Card):
+	print_debug("on_card_unhighligthed:", cards_highligthed_queue)
+	if not cards_highligthed_queue.has(card): return
+	card.unhighlight()
+	cards_highligthed_queue.erase(card)
+	if cards_highligthed_queue.is_empty(): return
+	if is_instance_valid(cards_highligthed_queue.front()):
+		cards_highligthed_queue.front().highlight()
 	pass
 
 func on_select_object(body : PhysicsBody2D):
@@ -167,18 +191,18 @@ func _process_selected_objects(event : InputEventMouse):
 func _process_point_data_on_objects(data : PointData):
 	var rand_radius = selected_objects.size() * 10
 	var angles_degrees = 360.0 / selected_objects.size()
-	print_debug("angles_degrees:", angles_degrees)
+	#print_debug("angles_degrees:", angles_degrees)
 	var accum_degrees = 0
 	for object in selected_objects:
 		var new_data : PointData = PointData.new()
 		new_data.object = data.object
 		var new_pos = data.position + Vector2(cos(deg_to_rad(accum_degrees)), sin(deg_to_rad(accum_degrees))) * rand_radius
 		new_data.position = new_pos
-		print_debug(new_data, data)
+		#print_debug(new_data, data)
 		if object.has_method("do_action"):
 			object.do_action(new_data, false)
 		accum_degrees += angles_degrees
-		print_debug("accum_degrees:", accum_degrees)
+		#print_debug("accum_degrees:", accum_degrees)
 	pass
 
 func on_map_event(event : InputEventMouse):

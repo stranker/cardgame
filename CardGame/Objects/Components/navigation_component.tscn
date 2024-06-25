@@ -28,22 +28,22 @@ target_position = Vector2(100, 0)
 collision_mask = 4
 
 [node name="Left" type="RayCast2D" parent="RaycastPivot"]
-rotation = -1.309
-target_position = Vector2(100, 0)
-collision_mask = 4
-
-[node name="LeftBack" type="RayCast2D" parent="RaycastPivot"]
-rotation = -2.35619
+rotation = -0.785397
 target_position = Vector2(100, 0)
 collision_mask = 4
 
 [node name="Right" type="RayCast2D" parent="RaycastPivot"]
-rotation = 1.309
+rotation = 0.785397
+target_position = Vector2(100, 0)
+collision_mask = 4
+
+[node name="LeftBack" type="RayCast2D" parent="RaycastPivot"]
+rotation = -1.57079
 target_position = Vector2(100, 0)
 collision_mask = 4
 
 [node name="RightBack" type="RayCast2D" parent="RaycastPivot"]
-rotation = 2.35619
+rotation = 1.57079
 target_position = Vector2(100, 0)
 collision_mask = 4
 

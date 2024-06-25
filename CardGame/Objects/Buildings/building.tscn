@@ -78,7 +78,7 @@ construct_component = NodePath("../ConstructComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
 texture_filter = 1
-position = Vector2(0, 56)
+position = Vector2(0, 64)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_vfced")
 offset = Vector2(2.5, -187.5)

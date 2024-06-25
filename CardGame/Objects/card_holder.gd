@@ -17,12 +17,12 @@ func _ready():
 	global_position.x = half_screen_center.x
 	var unit = load("res://Objects/Cards/unit_data.tres")
 	var house = load("res://Objects/Cards/house_data.tres")
-	_create_card(house)
-	_create_card(house)
-	_create_card(unit)
-	_create_card(unit)
-	_create_card(unit)
-	_create_card(unit)
+	#_create_card(house)
+	#_create_card(house)
+	#_create_card(unit)
+	#_create_card(unit)
+	#_create_card(unit)
+	#_create_card(unit)
 	_create_card(unit)
 	_create_card(unit)
 	_create_card(unit)
@@ -32,7 +32,7 @@ func _create_card(data : CardData):
 	var card : Card = card_scene.instantiate() as Card
 	card.card_picked.connect(_on_card_picked)
 	card.card_dropped.connect(_on_card_dropped)
-	card.card_highlighted.connect(_on_card_highlighted)
+	card.card_highligthed.connect(_on_card_highligted)
 	cards_parent.add_child(card)
 	cards.append(card)
 	card.set_data(data)
@@ -63,13 +63,6 @@ func _on_card_dropped(card : Card):
 			hand_card.enable()
 	pass
 
-func _on_card_highlighted(card : Card):
-	for hand_card in cards:
-		if card != hand_card:
-			hand_card.unhighlight()
-	cards_parent.move_child(card, cards_parent.get_child_count() - 1)
-	pass
-
 func on_construct_failed(card : Card):
 	card.reset()
 	for hand_card in cards:
@@ -85,4 +78,6 @@ func on_construct_success(card : Card):
 	_arrange_cards()
 	pass
 
-
+func _on_card_highligted(card : Card):
+	cards_parent.move_child(card, cards_parent.get_child_count() - 1)
+	pass

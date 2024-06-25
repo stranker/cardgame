@@ -136,6 +136,7 @@ offset_right = 88.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("3_qogqq")
 expand_mode = 1
 stretch_mode = 5
@@ -169,6 +170,7 @@ text = "Description"
 label_settings = SubResource("LabelSettings_fakbd")
 
 [node name="Interact" type="Area2D" parent="Background"]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Interact"]
 shape = SubResource("RectangleShape2D_o7baq")
