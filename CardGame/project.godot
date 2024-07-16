@@ -18,6 +18,8 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 
 ConstructManager="*res://Managers/construct_manager.gd"
 SelectionManager="*res://Managers/selection_manager.gd"
+MergeManager="*res://Managers/merge_manager.gd"
+GameManager="*res://Managers/game_manager.gd"
 
 [display]
 
@@ -53,5 +55,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_3="Unit"
 2d_physics/layer_4="Selection"
 2d_physics/layer_5="Construct"
+2d_physics/layer_6="Terrain"
+2d_physics/layer_7="Merge"
 avoidance/layer_1="Player"
 avoidance/layer_2="Enemy"

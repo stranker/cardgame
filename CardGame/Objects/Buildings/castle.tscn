@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgjo7m2ouftqi"]
+
+[ext_resource type="PackedScene" uid="uid://cwp7jntte1nfm" path="res://Objects/Buildings/building.tscn" id="1_odae3"]
+[ext_resource type="Texture2D" uid="uid://b0mobwkpeqh5b" path="res://Assets/Sprites/castle.png" id="2_tlib4"]
+
+[node name="Castle" instance=ExtResource("1_odae3")]
+is_enemy = true
+is_dummy = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
+position = Vector2(-68, -44)
+polygon = PackedVector2Array(-69, 27, 71, 95, 212, 27, 68, -29)
+
+[node name="Sprite2D" parent="VisualComponent" index="0"]
+position = Vector2(0, 72)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_tlib4")
+region_enabled = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="ConstructComponent" index="0"]
+position = Vector2(-68, -44)
+polygon = PackedVector2Array(-69, 27, 71, 95, 212, 27, 68, -29)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SelectableComponent" index="0"]
+polygon = PackedVector2Array(2, 59, -142, -12, -146, -81, 6, -220, 152, -78, 153, -14)
+
+[node name="ProgressBar" parent="HealthComponent" index="0"]
+offset_left = -144.0
+offset_top = -232.0
+offset_right = 149.0
+offset_bottom = -224.0

@@ -25,6 +25,7 @@ func init(new_speed : float):
 	navigation_agent.max_speed = speed
 	for ray_cast in ray_cast_pivot.get_children():
 		ray_cast.add_exception(get_parent())
+	set_enable_raycasts(false)
 	pass
 
 func target_object(obj : Node2D):
@@ -34,9 +35,11 @@ func target_object(obj : Node2D):
 	if not target.destroy.is_connected(on_target_destroyed):
 		target.destroy.connect(on_target_destroyed)
 	move_to_position(obj.global_position)
+	set_enable_raycasts(true)
 	pass
 
 func force_move_to_position(pos : Vector2):
+	set_enable_raycasts(false)
 	target = null
 	state = State.POSITION
 	move_to_position(pos)
@@ -44,10 +47,8 @@ func force_move_to_position(pos : Vector2):
 
 func move_to_position(pos : Vector2):
 	$Timer.start()
-	set_enable_raycasts(true)
 	navigation_agent.target_position = pos
 	target_position = pos
-	set_physics_process(true)
 	pass
 
 func set_enable(value : bool):
@@ -79,27 +80,28 @@ func _process_target(delta : float):
 	pass
 
 func _process_movement(delta : float):
-	var direction = global_position.direction_to(navigation_agent.get_next_path_position())
-	ray_cast_pivot.rotation = atan2(direction.y, direction.x)
+	var direction = _process_raycasts(global_position.direction_to(navigation_agent.get_next_path_position()))
+	var new_velocity: Vector2 = direction * speed
+	var steering = new_velocity - navigation_agent.velocity
+	var vel = navigation_agent.velocity
+	vel += steering
+	navigation_agent.velocity = vel
+	_on_velocity_computed(vel)
+	pass
+
+func _process_raycasts(dir : Vector2):
+	ray_cast_pivot.rotation = atan2(dir.y, dir.x)
 	if front_ray_cast.is_colliding():
 		if front_ray_cast.get_collider().is_enemy and is_instance_valid(target):
 			front_ray_cast.enabled = false
 		$Timer.stop()
 		for ray_cast in ray_cast_pivot.get_children():
 			if not ray_cast.is_colliding():
-				direction = global_position.direction_to(ray_cast.to_global(ray_cast.target_position))
+				dir = global_position.direction_to(ray_cast.to_global(ray_cast.target_position))
 				break
-		debug_direction = direction
+		debug_direction = dir
 		queue_redraw()
-	var new_velocity: Vector2 = direction * speed
-	var steering = new_velocity - navigation_agent.velocity
-	var vel = navigation_agent.velocity
-	vel += steering
-	if navigation_agent.avoidance_enabled:
-		navigation_agent.velocity = vel
-	else:
-		_on_velocity_computed(vel)
-	pass
+	return dir
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	_on_velocity_computed(safe_velocity)
@@ -111,7 +113,6 @@ func _on_velocity_computed(vel : Vector2):
 
 func _on_navigation_agent_2d_target_reached():
 	if is_instance_valid(target):
-		#print_debug("Target Reached:", target.name)
 		target_reached.emit(target)
 	else:
 		position_reached.emit()
@@ -128,7 +129,7 @@ func on_target_destroyed(target):
 	pass
 
 func _on_timer_timeout():
-	_recalculate_path()
+	#_recalculate_path()
 	pass # Replace with function body.
 
 func _recalculate_path():

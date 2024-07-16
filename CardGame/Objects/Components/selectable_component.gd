@@ -3,10 +3,7 @@ class_name SelectableComponent
 extends Area2D
 
 @export var is_selected : bool = false
-@export var size_offset : Vector2 = Vector2(10, 10)
 @export var select_target : AnimatedSprite2D
-var size : Vector2
-var rect_size : Rect2
 var is_mouse_inside : bool = false
 
 signal selected()
@@ -14,9 +11,8 @@ signal deselected()
 signal action_target()
 
 func _ready():
-	size = get_child(0).shape.size + size_offset
 	selected.connect(SelectionManager.add_selected_object.bind(get_parent()))
-	action_target.connect(SelectionManager.on_action_target.bind(get_parent()))
+	action_target.connect(SelectionManager.on_action_targeted.bind(get_parent()))
 	select_target.hide()
 	pass
 
@@ -32,11 +28,11 @@ func deselect():
 	deselected.emit()
 	pass
 
-func _unhandled_input(event : InputEvent):
+func _input(event : InputEvent):
 	if event.is_action("right_click") and is_mouse_inside:
 		if event.is_pressed():
+			get_viewport().set_input_as_handled()
 			action_target.emit()
-	pass
 
 func _on_input_event(viewport, event : InputEvent, shape_idx):
 	if event.is_action("left_click") and is_mouse_inside:

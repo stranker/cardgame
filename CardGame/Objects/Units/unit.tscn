@@ -170,10 +170,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_08lj5"]
-radius = 16.0
+radius = 24.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_chg2t"]
-size = Vector2(48, 64)
+size = Vector2(96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a32ep"]
 atlas = ExtResource("5_f008r")
@@ -240,7 +240,8 @@ font_size = 12
 
 [node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("debug_state", "debug_target", "debug_name") groups=["Unit"]]
 collision_layer = 4
-collision_mask = 6
+collision_mask = 38
+input_pickable = true
 motion_mode = 1
 slide_on_ceiling = false
 floor_stop_on_slope = false
@@ -353,5 +354,4 @@ label_settings = SubResource("LabelSettings_bxovw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="deselected" from="SelectableComponent" to="." method="_on_selectable_component_deselected"]
-[connection signal="selected" from="SelectableComponent" to="." method="_on_selectable_component_selected"]
+[connection signal="input_event" from="." to="." method="_on_input_event"]

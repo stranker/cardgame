@@ -28,7 +28,7 @@ signal card_unhighlighted(card)
 signal card_highligthed(card)
 
 func _ready():
-	mid_position = Vector2(get_viewport_rect().size.x * 0.5, global_position.y)
+	mid_position = get_parent().global_position
 	card_picked.connect(SelectionManager.on_card_selected)
 	card_dropped.connect(SelectionManager.on_card_deselected)
 	card_try_highlighted.connect(SelectionManager.on_card_try_highligthed)
@@ -110,7 +110,7 @@ func highlight():
 	pass
 
 func _on_interact_input_event(viewport, event, shape_idx):
-	if pick_state == PickState.DISABLED: return
+	if pick_state == PickState.DISABLED or not can_pick_card(): return
 	if event.is_action("left_click"):
 		if event.pressed:
 			movement_state = MovementState.DRAG
@@ -126,3 +126,6 @@ func _on_interact_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseMotion and movement_state == MovementState.DRAG:
 		global_position = get_global_mouse_position()
 	pass # Replace with function body.
+
+func can_pick_card():
+	return card_data.card_cost <= GameManager.mana

@@ -11,7 +11,6 @@ extends StaticBody2D
 @export var max_health : float = 10
 @export var is_dummy : bool = false
 
-
 signal destroy(building)
 
 func _ready():
@@ -29,7 +28,7 @@ func take_damage(amount : float):
 	health_component.take_damage(amount)
 	pass
 
-func do_action(data : SelectionManager.PointData, multiple_selection : bool):
+func do_action(data : SelectionManager.PointData):
 	pass
 
 func on_health_dead():

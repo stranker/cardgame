@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var select_component : SelectableComponent = $SelectableComponent
 @onready var visual_component : VisualComponent = $VisualComponent
 @onready var construct_component : ConstructComponent = $ConstructComponent
+#@onready var merge_component : MergeComponent = $MergeComponent
 @export var is_enemy : bool = false
 @export var debug_state : Label
 @export var debug_target : Label
@@ -19,7 +20,7 @@ extends CharacterBody2D
 @export var max_health : float = 10
 @export var is_dummy : bool = false
 
-enum State { IDLE, MOVE, ATTACK, FOLLOW }
+enum State { SELECT, IDLE, MOVE, ATTACK, FOLLOW }
 var state : State = State.IDLE
 
 signal state_update(state)
@@ -51,7 +52,8 @@ func _ready():
 		health_component.destructible = false
 	pass
 
-func do_action(data : SelectionManager.PointData, multiple_selection : bool):
+func do_action(data : SelectionManager.PointData):
+	#print_debug(data)
 	if is_dummy: return
 	if data.object == self: return
 	if data.object:
@@ -145,11 +147,15 @@ func on_target_update(target):
 	pass
 
 func on_unit_selected():
+	#set_state(State.SELECT)
 	health_component.object_select_update(true)
+	#merge_component.check_merge()
 	pass # Replace with function body.
 
 func on_unit_deselected():
+	#set_state(State.IDLE)
 	health_component.object_select_update(false)
+	#merge_component.end_merge()
 	pass # Replace with function body.
 
 func on_health_hit():

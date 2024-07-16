@@ -11,7 +11,8 @@ var construct_phase : ConstructPhase = ConstructPhase.IDLE
 
 func _process(delta):
 	if not current_card_object: return
-	current_card_object.global_position = get_global_mouse_position()
+	var CELL_SIZE = 32.0
+	current_card_object.global_position = (get_global_mouse_position() / CELL_SIZE).floor() * CELL_SIZE
 	pass
 
 func create_card_object(card : Card):
@@ -32,6 +33,7 @@ func on_card_dropped(card : Card):
 		construct_phase = ConstructPhase.IDLE
 		construct_success.emit(card)
 		current_card_object.get_node("ConstructComponent").construct()
+		GameManager.spend_card(card)
 	else:
 		current_card_object.queue_free()
 		current_card_object = null

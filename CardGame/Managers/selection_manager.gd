@@ -18,12 +18,21 @@ var selection_state : SelectionState = SelectionState.IDLE
 
 var cards_highligthed_queue : Array[Card]
 
+@onready var selection_panel_scene : = preload("res://Objects/Misc/selection.tscn")
+var selection_panel : Panel
+
 class PointData:
 	var position : Vector2
 	var object : Node2D
+	
+	func _to_string():
+		return "PointData:(" + str(position) + " - " + str(object) + ")"
 
 func _ready():
 	selection_area_setup.call_deferred()
+	selection_panel = selection_panel_scene.instantiate()
+	add_child(selection_panel)
+	selection_panel.hide()
 	pass
 
 func selection_area_setup():
@@ -58,7 +67,7 @@ func remove_selected_object(obj : Node2D):
 	pass
 
 func _unhandled_input(event : InputEvent):
-	if interaction_state == InteractionState.CARD: return
+	if interaction_state == InteractionState.CARD or not cards_highligthed_queue.is_empty(): return
 	if event.is_action("left_click"):
 		if event.is_pressed():
 			_unselect_all()
@@ -67,7 +76,6 @@ func _unhandled_input(event : InputEvent):
 			_end_selection_area(event.global_position)
 	if event is InputEventMouseMotion and selection_state == SelectionState.SELECT:
 		_process_selection_area(event.global_position)
-		pass
 	pass
 
 func _draw():
@@ -83,8 +91,10 @@ func _start_selection_area(pos : Vector2):
 	if interaction_state == InteractionState.CARD: return
 	_reset_selection_area()
 	selection_state = SelectionState.SELECT
-	start_pos = pos
+	start_pos = get_global_mouse_position()
 	selection_area.global_position = pos
+	selection_panel.show()
+	selection_panel.global_position = pos
 	pass
 
 func _process_selection_area(pos : Vector2):
@@ -92,7 +102,7 @@ func _process_selection_area(pos : Vector2):
 	selection_area.monitoring = true
 	var rect_start_pos : Vector2
 	var rect_end_pos : Vector2
-	end_pos = pos
+	end_pos = get_global_mouse_position()
 	rect_end_pos.x = abs(end_pos.x - start_pos.x)
 	rect_end_pos.y = abs(end_pos.y - start_pos.y)
 	selection_rect = Rect2(rect_start_pos, rect_end_pos)
@@ -101,14 +111,16 @@ func _process_selection_area(pos : Vector2):
 	elif start_pos.y > end_pos.y:
 		selection_area.global_position = start_pos + (end_pos - start_pos) * 0.5
 	selection_shape.size = selection_rect.size
-	queue_redraw()
+	selection_panel.size = selection_rect.size
+	selection_panel.global_position = selection_area.global_position - selection_panel.size * 0.5
+	#queue_redraw()
 	pass
 
 func _end_selection_area(pos : Vector2):
 	if interaction_state == InteractionState.CARD: return
 	selection_state = SelectionState.END_SELECT
 	_reset_selection_area()
-	queue_redraw()
+	#queue_redraw()
 	pass
 
 func on_card_selected(card : Card):
@@ -117,7 +129,7 @@ func on_card_selected(card : Card):
 	if cards_highligthed_queue.has(card):
 		cards_highligthed_queue.erase(card)
 	_reset_selection_area()
-	queue_redraw()
+	#queue_redraw()
 	pass
 
 func _reset_selection_area():
@@ -127,6 +139,8 @@ func _reset_selection_area():
 	selection_rect = Rect2()
 	selection_shape.size = selection_rect.size
 	selection_area.global_position = Vector2.ONE * -9999
+	selection_panel.size = Vector2.ZERO
+	selection_panel.hide()
 	pass
 
 func on_card_deselected(_card : Card):
@@ -136,7 +150,6 @@ func on_card_deselected(_card : Card):
 	pass
 
 func on_card_try_highligthed(card : Card):
-	print_debug("on_card_try_highligthed:", cards_highligthed_queue)
 	if cards_highligthed_queue.has(card): return
 	if card.is_queued_for_deletion(): return
 	if not is_instance_valid(card): return
@@ -146,7 +159,6 @@ func on_card_try_highligthed(card : Card):
 	pass
 
 func on_card_unhighligthed(card : Card):
-	print_debug("on_card_unhighligthed:", cards_highligthed_queue)
 	if not cards_highligthed_queue.has(card): return
 	card.unhighlight()
 	cards_highligthed_queue.erase(card)
@@ -173,7 +185,7 @@ func _unselect_all():
 	selected_objects.clear()
 	pass
 
-func on_action_target(obj : Node2D):
+func on_action_targeted(obj : Node2D):
 	if selected_objects.is_empty(): return
 	var point_data : PointData = PointData.new()
 	point_data.position = obj.global_position
@@ -181,32 +193,30 @@ func on_action_target(obj : Node2D):
 	_process_point_data_on_objects(point_data)
 	pass
 
-func _process_selected_objects(event : InputEventMouse):
+func _process_selected_objects():
 	if selected_objects.is_empty(): return
 	var point_data : PointData = PointData.new()
-	point_data.position = event.global_position
+	point_data.position = get_global_mouse_position()
 	_process_point_data_on_objects(point_data)
 	pass
 
 func _process_point_data_on_objects(data : PointData):
+	#print_debug("_process_point_data_on_objects")
 	var rand_radius = selected_objects.size() * 10
 	var angles_degrees = 360.0 / selected_objects.size()
-	#print_debug("angles_degrees:", angles_degrees)
 	var accum_degrees = 0
 	for object in selected_objects:
 		var new_data : PointData = PointData.new()
 		new_data.object = data.object
 		var new_pos = data.position + Vector2(cos(deg_to_rad(accum_degrees)), sin(deg_to_rad(accum_degrees))) * rand_radius
 		new_data.position = new_pos
-		#print_debug(new_data, data)
 		if object.has_method("do_action"):
-			object.do_action(new_data, false)
+			object.do_action(new_data)
 		accum_degrees += angles_degrees
-		#print_debug("accum_degrees:", accum_degrees)
 	pass
 
-func on_map_event(event : InputEventMouse):
-	_process_selected_objects(event)
+func on_map_clicked():
+	_process_selected_objects()
 	pass
 
 func on_dead_unit(unit):

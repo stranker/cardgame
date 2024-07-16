@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwp7jntte1nfm"]
+[gd_scene load_steps=15 format=3 uid="uid://cwp7jntte1nfm"]
 
 [ext_resource type="Script" path="res://Objects/Buildings/building.gd" id="1_v2wy1"]
 [ext_resource type="Texture2D" uid="uid://cgea2irh4lgi6" path="res://Objects/Units/tilesheet.png" id="3_vfced"]
@@ -7,16 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bqqxauqfyhslm" path="res://Objects/Components/selectable_component.tscn" id="5_elbbj"]
 [ext_resource type="PackedScene" uid="uid://c51cj72bpt7w" path="res://Objects/Components/health_component.tscn" id="6_cnadg"]
 [ext_resource type="Texture2D" uid="uid://b5mfihmx3xxqv" path="res://Objects/Units/target.png" id="6_smfmk"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wh8cu"]
-radius = 40.0
-height = 126.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5llsy"]
-size = Vector2(128, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_va0gn"]
-size = Vector2(144, 144)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pv61r"]
 atlas = ExtResource("6_smfmk")
@@ -85,22 +75,10 @@ offset = Vector2(2.5, -187.5)
 region_enabled = true
 region_rect = Rect2(151.949, 476.667, 323.487, 450.154)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 24)
-rotation = -1.57079
-shape = SubResource("CapsuleShape2D_wh8cu")
-
 [node name="ConstructComponent" parent="." instance=ExtResource("4_iq34l")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ConstructComponent"]
-shape = SubResource("RectangleShape2D_5llsy")
 
 [node name="SelectableComponent" parent="." node_paths=PackedStringArray("select_target") instance=ExtResource("5_elbbj")]
 select_target = NodePath("AnimatedSprite2D")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="SelectableComponent"]
-shape = SubResource("RectangleShape2D_va0gn")
-debug_color = Color(0.440776, 0.460355, 0.983463, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SelectableComponent"]
 visible = false
